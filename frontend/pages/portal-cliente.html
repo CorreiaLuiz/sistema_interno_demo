@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Área do Cliente — Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* ===== Área do Cliente (portal) — namespace .pc-* ===== */
+  .pc-page { background: var(--color-bg); min-height: 100vh; }
+  .pc-wrap { max-width: 1080px; margin: 0 auto; padding-left: var(--space-6); padding-right: var(--space-6); }
+
+  /* Topo bordô com as linhas de livro-razão da marca */
+  .pc-topo {
+    position: relative; overflow: hidden; color: #F3E6E2;
+    background:
+      radial-gradient(100% 120% at 100% 0%, rgba(201,155,89,0.18), transparent 55%),
+      linear-gradient(160deg, var(--brand-near-black) 0%, var(--brand-maroon-deep) 60%, var(--brand-maroon) 100%);
+  }
+  .pc-topo::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: repeating-linear-gradient(to bottom, rgba(255,255,255,0.035) 0 1px, transparent 1px 44px);
+  }
+  .pc-topo > * { position: relative; z-index: 1; }
+  .pc-barra { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); height: 68px; }
+  .pc-marca { display: flex; align-items: center; gap: var(--space-3); color: #fff; min-width: 0; }
+  .pc-marca .icone { width: 38px; height: 38px; border-radius: var(--radius-md); background: rgba(255,255,255,0.95); padding: 5px; flex-shrink: 0; }
+  .pc-marca .icone img { width: 100%; height: 100%; object-fit: contain; }
+  .pc-marca .nome { font-family: var(--font-display); font-weight: 700; font-size: var(--text-base); line-height: 1.15; }
+  .pc-marca .nome span { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-gold); }
+  .pc-acoes-topo { display: flex; align-items: center; gap: var(--space-2); }
+  .pc-icone-btn { width: 38px; height: 38px; border-radius: var(--radius-sm); color: #D9C4C0; display: inline-flex; align-items: center; justify-content: center; }
+  .pc-icone-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .pc-icone-btn svg { width: 18px; height: 18px; }
+  .pc-usuario { font-size: var(--text-sm); color: #D9C4C0; margin-right: var(--space-2); max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pc-sair { font-size: var(--text-sm); font-weight: 600; color: #fff; border: 1px solid rgba(247,241,231,0.3); border-radius: var(--radius-sm); height: 36px; padding: 0 var(--space-4); }
+  .pc-sair:hover { border-color: var(--brand-gold); color: var(--brand-gold); }
+
+  .pc-empresa { padding: var(--space-7) 0 var(--space-6); display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-5); flex-wrap: wrap; }
+  .pc-empresa .rotulo { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-gold); margin-bottom: var(--space-2); }
+  .pc-empresa h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.15; color: #fff; letter-spacing: -0.02em; }
+  .pc-empresa .cnpj { font-family: var(--font-mono); font-size: var(--text-sm); color: #E6D4CF; margin-top: var(--space-2); }
+  .pc-trocar { display: flex; flex-direction: column; gap: var(--space-1); }
+  .pc-trocar label { font-size: var(--text-xs); color: #C9B3AE; }
+  .pc-trocar select {
+    height: 40px; min-width: 260px; max-width: 100%; border-radius: var(--radius-sm); padding: 0 var(--space-3);
+    background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .pc-trocar select option { color: var(--color-text); background: var(--color-surface); }
+
+  .pc-abas { display: flex; gap: var(--space-1); overflow-x: auto; scrollbar-width: none; }
+  .pc-abas::-webkit-scrollbar { display: none; }
+  .pc-aba {
+    padding: var(--space-3) var(--space-5); font-size: var(--text-sm); font-weight: 600; color: #D9C4C0;
+    border-radius: var(--radius-md) var(--radius-md) 0 0; white-space: nowrap; display: inline-flex; align-items: center; gap: var(--space-2);
+  }
+  .pc-aba:hover { color: #fff; }
+  .pc-aba[aria-selected="true"] { background: var(--color-bg); color: var(--color-text); }
+  .pc-aba .contador { min-width: 20px; height: 20px; padding: 0 6px; border-radius: var(--radius-full); background: var(--brand-gold); color: var(--brand-near-black); font-size: 0.7rem; display: inline-flex; align-items: center; justify-content: center; }
+
+  .pc-conteudo { padding-top: var(--space-7); padding-bottom: var(--space-8); }
+  .pc-painel { display: none; flex-direction: column; gap: var(--space-5); }
+  .pc-painel.ativo { display: flex; }
+
+  .pc-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); }
+  .pc-card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-4); flex-wrap: wrap; }
+  .pc-card h2 { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; }
+  .pc-card .sub { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: 2px; }
+  .pc-vazio { font-size: var(--text-sm); color: var(--color-text-muted); padding: var(--space-3) 0; }
+
+  /* Atenção (vencimentos) */
+  .pc-atencao { border-color: rgba(180,116,10,0.35); background: linear-gradient(0deg, var(--color-amber-bg), var(--color-amber-bg)), var(--color-surface); }
+  .pc-atencao h2 { display: flex; align-items: center; gap: var(--space-2); }
+  .pc-atencao h2 svg { width: 20px; height: 20px; color: var(--color-amber); }
+  .pc-atencao-lista { display: grid; gap: var(--space-2); }
+  .pc-atencao-item { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); font-size: var(--text-sm); padding: var(--space-3) var(--space-4); background: var(--color-surface); border-radius: var(--radius-md); border: 1px solid var(--color-border); flex-wrap: wrap; }
+
+  /* Atalhos */
+  .pc-atalhos { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+  .pc-atalho {
+    text-align: left; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg);
+    padding: var(--space-5); display: flex; gap: var(--space-4); align-items: flex-start;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  }
+  .pc-atalho:hover { border-color: var(--color-accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .pc-atalho:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; border-color: var(--color-border); }
+  .pc-atalho .ic { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--color-accent-bg); color: var(--color-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .pc-atalho .ic svg { width: 20px; height: 20px; }
+  .pc-atalho strong { display: block; font-size: var(--text-base); font-weight: 700; margin-bottom: 2px; }
+  .pc-atalho span { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.45; }
+
+  .pc-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+  .pc-linha { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); font-size: var(--text-sm); flex-wrap: wrap; }
+  .pc-linha:last-child { border-bottom: none; }
+  .pc-linha .meta { color: var(--color-text-muted); font-size: var(--text-xs); margin-top: 2px; }
+
+  /* Documentos */
+  .pc-filtros { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); }
+  .pc-chip { height: 32px; padding: 0 var(--space-4); border-radius: var(--radius-full); border: 1px solid var(--color-border-strong); background: var(--color-surface); font-size: var(--text-sm); font-weight: 500; color: var(--color-text-muted); }
+  .pc-chip:hover { color: var(--color-text); }
+  .pc-chip[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+  [data-theme="dark"] .pc-chip[aria-pressed="true"] { color: var(--brand-near-black); }
+  .pc-doc { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+  .pc-doc:last-child { border-bottom: none; }
+  .pc-doc .ic { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--color-surface-alt); border: 1px solid var(--color-border); color: var(--color-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; }
+  .pc-doc .info { flex: 1; min-width: 0; }
+  .pc-doc .info strong { display: block; font-size: var(--text-sm); overflow-wrap: anywhere; }
+  .pc-doc .info .meta { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; }
+  .pc-aviso { font-size: var(--text-xs); color: var(--color-text-muted); background: var(--color-surface-alt); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); line-height: 1.55; }
+
+  /* Pedidos */
+  .pc-pedido { padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+  .pc-pedido:last-child { border-bottom: none; }
+  .pc-pedido .topo { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); flex-wrap: wrap; }
+  .pc-pedido strong { font-size: var(--text-sm); }
+  .pc-pedido .meta { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; }
+  .pc-resposta { margin-top: var(--space-3); padding: var(--space-3) var(--space-4); border-left: 3px solid var(--brand-gold); background: var(--color-surface-alt); border-radius: 0 var(--radius-md) var(--radius-md) 0; font-size: var(--text-sm); line-height: 1.55; }
+  .pc-resposta .rotulo { font-size: var(--text-xs); font-weight: 600; color: var(--color-text-muted); margin-bottom: 2px; }
+
+  .pc-form-pedido { display: none; border-top: 1px solid var(--color-border); padding-top: var(--space-5); margin-top: var(--space-2); }
+  .pc-form-pedido.aberto { display: block; }
+  .pc-form-pedido textarea { min-height: 80px; }
+  .pc-acoes-form { display: flex; gap: var(--space-3); justify-content: flex-end; flex-wrap: wrap; }
+
+  .pc-carregando { min-height: 60vh; display: flex; align-items: center; justify-content: center; gap: var(--space-3); color: var(--color-text-muted); }
+
+  @media (max-width: 800px) {
+    .pc-wrap { padding-left: var(--space-4); padding-right: var(--space-4); }
+    .pc-atalhos, .pc-grid-2 { grid-template-columns: 1fr; }
+    .pc-usuario { display: none; }
+    .pc-trocar, .pc-trocar select { width: 100%; min-width: 0; }
+    .pc-card { padding: var(--space-5); }
+  }
+  @media (max-width: 480px) {
+    .pc-marca .nome span { display: none; }
+    .pc-doc { flex-wrap: wrap; }
+    .pc-doc .btn { width: 100%; }
+  }
+</style>
+</head>
+<body class="pc-page">
+
+  <div id="tela-carregando" class="pc-carregando"><span class="spinner escuro"></span> Carregando sua Área do Cliente…</div>
+
+  <div id="tela-portal" style="display:none;">
+    <header class="pc-topo">
+      <div class="pc-wrap">
+        <div class="pc-barra">
+          <div class="pc-marca">
+            <div class="icone"><img src="../assets/logo-mark.png" alt=""></div>
+            <div class="nome">Privilege<span>Área do Cliente</span></div>
+          </div>
+          <div class="pc-acoes-topo">
+            <span class="pc-usuario" id="nome-usuario"></span>
+            <button class="pc-icone-btn" id="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            </button>
+            <a class="pc-sair" href="/pages/cliente-ajuda.html" style="display:inline-flex; align-items:center; text-decoration:none;">Ajuda</a>
+            <button class="pc-sair" id="btn-sair" type="button">Sair</button>
+          </div>
+        </div>
+
+        <div class="pc-empresa">
+          <div>
+            <div class="rotulo">Empresa</div>
+            <h1 id="nome-empresa">—</h1>
+            <div class="cnpj" id="cnpj-empresa"></div>
+          </div>
+          <div class="pc-trocar" id="bloco-trocar-empresa" style="display:none;">
+            <label for="seletor-empresa">Trocar de empresa</label>
+            <select id="seletor-empresa"></select>
+          </div>
+        </div>
+
+        <nav class="pc-abas" role="tablist" aria-label="Seções da Área do Cliente">
+          <button class="pc-aba" role="tab" data-aba="inicio" aria-selected="true">Início</button>
+          <button class="pc-aba" role="tab" data-aba="documentos" aria-selected="false">Documentos</button>
+          <button class="pc-aba" role="tab" data-aba="pedidos" aria-selected="false">Pedidos <span class="contador" id="contador-pedidos" style="display:none;"></span></button>
+          <button class="pc-aba" role="tab" data-aba="conta" aria-selected="false">Minha conta</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="pc-wrap pc-conteudo">
+
+      <!-- ============ INÍCIO ============ -->
+      <section class="pc-painel ativo" data-painel="inicio" role="tabpanel">
+        <div class="pc-card pc-atencao" id="card-atencao" style="display:none;">
+          <div class="pc-card-head">
+            <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Precisa de atenção</h2>
+          </div>
+          <div class="pc-atencao-lista" id="lista-atencao"></div>
+        </div>
+
+        <div class="pc-atalhos">
+          <button class="pc-atalho" type="button" id="atalho-cartao">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="6" y1="10" x2="12" y2="10"/><line x1="6" y1="14" x2="16" y2="14"/></svg></div>
+            <div><strong>Cartão CNPJ</strong><span id="atalho-cartao-texto">Baixar o cartão CNPJ mais recente</span></div>
+          </button>
+          <button class="pc-atalho" type="button" id="atalho-guia">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></div>
+            <div><strong>Pedir 2ª via de guia</strong><span>DAS, INSS, FGTS e outras — o setor responsável recebe na hora</span></div>
+          </button>
+          <button class="pc-atalho" type="button" id="atalho-enviar">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+            <div><strong>Enviar documento</strong><span>Notas, extratos, contratos — direto para o escritório</span></div>
+          </button>
+        </div>
+
+        <div class="pc-grid-2">
+          <div class="pc-card">
+            <div class="pc-card-head"><div><h2>Certidões</h2><div class="sub">Situação da empresa nos órgãos</div></div></div>
+            <div id="lista-certidoes"></div>
+          </div>
+          <div class="pc-card">
+            <div class="pc-card-head"><div><h2>Certificado digital</h2><div class="sub">Validade do e-CNPJ / e-CPF</div></div></div>
+            <div id="lista-certificados"></div>
+          </div>
+          <div class="pc-card">
+            <div class="pc-card-head"><div><h2>Licenças e alvarás</h2></div></div>
+            <div id="lista-licencas"></div>
+          </div>
+          <div class="pc-card">
+            <div class="pc-card-head"><div><h2>Processos de legalização</h2><div class="sub">Abertura, alteração e baixa</div></div></div>
+            <div id="lista-processos"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DOCUMENTOS ============ -->
+      <section class="pc-painel" data-painel="documentos" role="tabpanel">
+        <div class="pc-card">
+          <div class="pc-card-head">
+            <div><h2>Documentos da empresa</h2><div class="sub">Tudo o que o escritório disponibilizou para você</div></div>
+          </div>
+          <div class="pc-filtros" id="filtros-documentos"></div>
+          <div id="lista-documentos"></div>
+          <p class="pc-aviso" id="aviso-certificado" style="display:none; margin-top:var(--space-4);">
+            <strong>Certificado digital:</strong> por segurança, a senha do certificado não fica guardada no sistema.
+            Se precisar dela, fale com o escritório por telefone.
+          </p>
+        </div>
+
+        <div class="pc-card" id="card-enviar">
+          <div class="pc-card-head"><div><h2>Enviar documento ao escritório</h2><div class="sub">PDF, PNG, JPG ou certificado (.pfx), até 15 MB</div></div></div>
+          <form id="form-upload">
+            <div class="grid-2">
+              <div class="campo">
+                <label for="arquivo-upload">Arquivo</label>
+                <input type="file" id="arquivo-upload" accept=".pdf,.png,.jpg,.jpeg,.pfx,.p12" required>
+              </div>
+              <div class="campo">
+                <label for="descricao-upload">Do que se trata?</label>
+                <input type="text" id="descricao-upload" maxlength="255" placeholder="Ex: Extrato bancário de agosto">
+              </div>
+            </div>
+            <div class="erro-msg" id="erro-upload"></div>
+            <div class="pc-acoes-form"><button type="submit" class="btn" id="btn-upload">Enviar documento</button></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ============ PEDIDOS ============ -->
+      <section class="pc-painel" data-painel="pedidos" role="tabpanel">
+        <div class="pc-card">
+          <div class="pc-card-head">
+            <div><h2>Pedidos ao escritório</h2><div class="sub">Peça a 2ª via de uma guia ou fale com um setor. Avisamos por e-mail e WhatsApp quando concluir.</div></div>
+            <button class="btn" type="button" id="btn-novo-pedido">+ Novo pedido</button>
+          </div>
+
+          <form class="pc-form-pedido" id="form-pedido">
+            <div class="grid-2">
+              <div class="campo">
+                <label for="pedido-setor">Setor</label>
+                <select id="pedido-setor" required></select>
+              </div>
+              <div class="campo">
+                <label for="pedido-tipo">O que você precisa?</label>
+                <select id="pedido-tipo" required></select>
+              </div>
+            </div>
+            <div class="campo" id="campo-competencia" style="display:none;">
+              <label for="pedido-competencia">Mês de referência da guia (competência)</label>
+              <input type="month" id="pedido-competencia">
+            </div>
+            <div class="campo">
+              <label for="pedido-observacao">Observação <span id="obs-obrigatoria" style="display:none;">*</span></label>
+              <textarea id="pedido-observacao" maxlength="2000" placeholder="Ex: Esqueci de pagar no vencimento, preciso com a data de hoje."></textarea>
+            </div>
+            <div class="erro-msg" id="erro-pedido"></div>
+            <div class="pc-acoes-form">
+              <button type="button" class="btn btn-secundario" id="btn-cancelar-pedido">Cancelar</button>
+              <button type="submit" class="btn" id="btn-enviar-pedido">Enviar pedido</button>
+            </div>
+          </form>
+
+          <div id="lista-pedidos" style="margin-top:var(--space-2);"></div>
+        </div>
+      </section>
+
+      <!-- ============ MINHA CONTA ============ -->
+      <section class="pc-painel" data-painel="conta" role="tabpanel">
+        <div class="pc-grid-2">
+          <div class="pc-card">
+            <div class="pc-card-head"><h2>Meus dados</h2></div>
+            <div class="pc-linha"><span>Nome</span><strong id="conta-nome">—</strong></div>
+            <div class="pc-linha"><span>E-mail (login)</span><strong id="conta-email" style="overflow-wrap:anywhere;">—</strong></div>
+            <div class="pc-linha"><span>WhatsApp para avisos</span><strong id="conta-telefone">—</strong></div>
+            <p class="pc-aviso" style="margin-top:var(--space-4);">Para mudar estes dados, fale com o escritório.</p>
+          </div>
+          <div class="pc-card">
+            <div class="pc-card-head"><h2>Trocar senha</h2></div>
+            <form id="form-senha">
+              <div class="campo">
+                <label for="senha-atual">Senha atual</label>
+                <input type="password" id="senha-atual" required autocomplete="current-password">
+              </div>
+              <div class="campo">
+                <label for="senha-nova">Nova senha (mínimo 8 caracteres)</label>
+                <input type="password" id="senha-nova" required minlength="8" autocomplete="new-password">
+              </div>
+              <div class="erro-msg" id="erro-senha"></div>
+              <div class="pc-acoes-form"><button type="submit" class="btn">Salvar nova senha</button></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/cliente-api.js"></script>
+  <script src="../js/portal-cliente.js"></script>
+  <script src="../js/assistente.js"></script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>

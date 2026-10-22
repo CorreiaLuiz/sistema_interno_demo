@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajuda da Área do Cliente — Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/ajuda.css">
+<style>
+  /* ===== Manual da Área do Cliente — namespace .ca-* ===== */
+  body { background: var(--color-bg); min-height: 100vh; }
+  .ca-topo { color: #F3E6E2; background: linear-gradient(160deg, var(--brand-near-black) 0%, var(--brand-maroon-deep) 60%, var(--brand-maroon) 100%); }
+  .ca-wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-6); }
+  .ca-barra { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); height: 68px; }
+  .ca-marca { display: flex; align-items: center; gap: var(--space-3); color: #fff; text-decoration: none; }
+  .ca-marca .icone { width: 38px; height: 38px; border-radius: var(--radius-md); background: rgba(255,255,255,0.95); padding: 5px; }
+  .ca-marca .icone img { width: 100%; height: 100%; object-fit: contain; }
+  .ca-marca .nome { font-family: var(--font-display); font-weight: 700; line-height: 1.15; }
+  .ca-marca .nome span { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-gold); }
+  .ca-acoes { display: flex; align-items: center; gap: var(--space-2); }
+  .ca-acoes a { font-size: var(--text-sm); font-weight: 600; color: #fff; border: 1px solid rgba(247,241,231,0.3); border-radius: var(--radius-sm); height: 36px; padding: 0 var(--space-4); display: inline-flex; align-items: center; text-decoration: none; }
+  .ca-acoes a:hover { border-color: var(--brand-gold); color: var(--brand-gold); }
+  .ca-acoes button { width: 38px; height: 38px; border-radius: var(--radius-sm); color: #D9C4C0; display: inline-flex; align-items: center; justify-content: center; }
+  .ca-acoes button svg { width: 18px; height: 18px; }
+  .ca-titulo { padding: var(--space-6) 0 var(--space-8); }
+  .ca-titulo h1 { color: #fff; font-size: var(--text-2xl); margin: 0 0 6px; }
+  .ca-titulo p { margin: 0; color: #D9C4C0; font-size: var(--text-sm); }
+  .ca-corpo { padding-top: var(--space-6); padding-bottom: var(--space-8); }
+  @media (max-width: 640px) {
+    .ca-wrap { padding: 0 var(--space-4); }
+    .ca-acoes a { padding: 0 var(--space-3); }
+  }
+</style>
+</head>
+<body>
+  <header class="ca-topo">
+    <div class="ca-wrap">
+      <div class="ca-barra">
+        <a class="ca-marca" href="/pages/cliente-login.html">
+          <div class="icone"><img src="../assets/logo-mark.png" alt=""></div>
+          <div class="nome">Privilege<span>Área do Cliente</span></div>
+        </a>
+        <div class="ca-acoes">
+          <button id="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+          <a id="link-voltar" href="/pages/cliente-login.html">Entrar</a>
+        </div>
+      </div>
+      <div class="ca-titulo">
+        <h1>Como usar a Área do Cliente</h1>
+        <p>Passo a passo com imagens. Ainda com dúvida? Clique em "Dúvidas?" no canto da tela ou fale com o escritório.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="ca-wrap ca-corpo">
+    <div class="aj-layout">
+      <nav class="aj-indice" aria-label="Assuntos do manual">
+        <input type="search" id="busca-manual" placeholder="Buscar no manual…" aria-label="Buscar no manual">
+        <div class="aj-lista"><p class="aj-vazio">Carregando…</p></div>
+      </nav>
+      <div class="aj-conteudo" id="conteudo-manual"></div>
+    </div>
+  </main>
+
+  <script src="../js/cliente-api.js"></script>
+  <script src="../js/manual.js"></script>
+  <script>
+    // Logado: o botão do topo volta para o portal; senão, leva ao login
+    if (tokenCliente()) {
+      const voltar = document.getElementById('link-voltar');
+      voltar.href = '/pages/portal-cliente.html';
+      voltar.textContent = 'Voltar à Área do Cliente';
+    }
+    document.getElementById('btn-tema').addEventListener('click', alternarTemaCliente);
+    montarManual({
+      endpoint: '/api/ajuda/cliente/manual',
+      indice: document.querySelector('.aj-indice'),
+      conteudo: document.getElementById('conteudo-manual'),
+      busca: document.getElementById('busca-manual')
+    }).catch((err) => {
+      document.getElementById('conteudo-manual').innerHTML = `<p class="aj-vazio">${esc(err.message)}</p>`;
+    });
+  </script>
+  <script src="../js/assistente.js"></script>
+</body>
+</html>

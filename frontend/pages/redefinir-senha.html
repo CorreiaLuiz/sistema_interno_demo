@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Redefinir senha — Sistema Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="login-page login-page-simples">
+  <main class="login-form-area">
+  <div class="login-card">
+    <div class="icone-login"><img src="../assets/logo-mark.png" alt="Privilege"></div>
+    <h2>Criar nova senha</h2>
+    <p class="subtitulo">Escolha uma nova senha para acessar o sistema.</p>
+    <form id="form-redefinir">
+      <div class="campo">
+        <label>Nova senha (mínimo 8 caracteres)</label>
+        <input type="password" id="nova-senha" required minlength="8" autocomplete="new-password">
+      </div>
+      <div class="campo">
+        <label>Confirmar nova senha</label>
+        <input type="password" id="confirmar-senha" required minlength="8" autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn btn-full">Salvar nova senha</button>
+      <div class="erro-msg" id="erro-redefinir"></div>
+    </form>
+    <div class="links-login"><a href="/pages/login.html">← Voltar para o login</a></div>
+  </div>
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script>
+    const token = new URLSearchParams(window.location.search).get('token');
+
+    document.getElementById('form-redefinir').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const erroEl = document.getElementById('erro-redefinir');
+      erroEl.textContent = '';
+
+      const novaSenha = document.getElementById('nova-senha').value;
+      const confirmar = document.getElementById('confirmar-senha').value;
+
+      if (novaSenha !== confirmar) {
+        erroEl.textContent = 'As senhas não coincidem.';
+        return;
+      }
+      if (!token) {
+        erroEl.textContent = 'Link inválido — token não encontrado na URL.';
+        return;
+      }
+
+      try {
+        const resp = await fetch('/api/auth/redefinir-senha', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, novaSenha })
+        });
+        const dados = await resp.json();
+
+        if (!resp.ok) {
+          erroEl.textContent = dados.erro || 'Não foi possível redefinir a senha.';
+          return;
+        }
+
+        notificar(dados.mensagem, 'sucesso');
+        setTimeout(() => { window.location.href = '/pages/login.html'; }, 1500);
+      } catch (err) {
+        erroEl.textContent = 'Não foi possível conectar ao servidor.';
+      }
+    });
+  </script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>

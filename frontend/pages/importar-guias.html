@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Importar guias — Sistema Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* ===== Importação de guias em lote — namespace .ig-* ===== */
+  .ig-passos { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-2); }
+  .ig-passo { display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-sm); font-weight: 600; color: var(--color-text-faint); }
+  .ig-passo .n { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--color-border-strong); display: inline-flex; align-items: center; justify-content: center; font-size: var(--text-xs); }
+  .ig-passo.ativo { color: var(--color-text); }
+  .ig-passo.ativo .n { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+  .ig-passo.feito { color: var(--color-emerald); }
+  .ig-passo.feito .n { background: var(--color-emerald-bg); border-color: transparent; color: var(--color-emerald); }
+  .ig-passo + .ig-passo::before { content: ''; width: 24px; height: 1px; background: var(--color-border-strong); margin-right: 4px; }
+
+  .ig-soltar {
+    border: 2px dashed var(--color-border-strong); border-radius: var(--radius-lg); background: var(--color-surface-alt);
+    padding: var(--space-8) var(--space-5); text-align: center; cursor: pointer;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+  .ig-soltar:hover, .ig-soltar.arrastando { border-color: var(--color-accent); background: var(--color-accent-bg); }
+  .ig-soltar svg { width: 40px; height: 40px; color: var(--color-accent); margin: 0 auto var(--space-3); }
+  .ig-soltar strong { display: block; font-size: var(--text-lg); margin-bottom: 4px; }
+  .ig-soltar span { font-size: var(--text-sm); color: var(--color-text-muted); }
+  .ig-selecionados { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); }
+
+  .ig-progresso { height: 10px; border-radius: var(--radius-full); background: var(--color-surface-alt); border: 1px solid var(--color-border); overflow: hidden; margin: var(--space-3) 0; }
+  .ig-progresso span { display: block; height: 100%; width: 0; background: var(--color-accent); transition: width 0.3s ease-out; }
+
+  .ig-resumo { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); }
+  .ig-filtro { height: 34px; padding: 0 var(--space-4); border-radius: var(--radius-full); border: 1px solid var(--color-border-strong); background: var(--color-surface); font-size: var(--text-sm); font-weight: 600; color: var(--color-text-muted); }
+  .ig-filtro[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+  [data-theme="dark"] .ig-filtro[aria-pressed="true"] { color: var(--brand-near-black); }
+  .ig-filtro .qtd { margin-left: 4px; opacity: 0.85; }
+
+  .ig-lido { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; }
+  .ig-empresa-input { width: 100%; min-width: 200px; height: 34px; padding: 0 var(--space-3); border: 1px solid var(--color-amber); border-radius: var(--radius-sm); background: var(--color-surface); color: var(--color-text); font-size: var(--text-sm); }
+  .ig-empresa-input.ok { border-color: var(--color-border-strong); }
+  .ig-trocar { font-size: var(--text-xs); }
+  tr.ig-ignorada td { opacity: 0.55; }
+  .ig-rodape { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+  .ig-rodape label { display: flex; gap: var(--space-2); align-items: flex-start; font-size: var(--text-sm); max-width: 560px; cursor: pointer; }
+  .ig-rodape input[type="checkbox"] { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--color-accent); }
+  .ig-acoes { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .ig-resultado { text-align: center; padding: var(--space-6) var(--space-4); }
+  .ig-resultado .icone { width: 56px; height: 56px; border-radius: 50%; background: var(--color-emerald-bg); color: var(--color-emerald); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); }
+  .ig-resultado .icone svg { width: 28px; height: 28px; }
+  .ig-resultado h2 { font-size: var(--text-xl); margin-bottom: var(--space-2); }
+  .ig-resultado p { color: var(--color-text-muted); font-size: var(--text-sm); line-height: 1.6; }
+  .ig-emails { display: inline-flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center; margin-top: var(--space-4); }
+
+  .ig-receita-topo { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: flex-end; margin: var(--space-3) 0; }
+  .ig-receita-topo input { height: 38px; }
+  .ig-receita-lista { max-height: 300px; overflow-y: auto; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+  .ig-receita-lista label { display: flex; align-items: center; gap: var(--space-3); padding: 8px var(--space-3); border-bottom: 1px solid var(--color-border); font-size: var(--text-sm); cursor: pointer; }
+  .ig-receita-lista label:last-child { border-bottom: none; }
+  .ig-receita-lista label.todas { background: var(--color-surface-alt); font-weight: 600; position: sticky; top: 0; z-index: 1; }
+  .ig-receita-lista input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--color-accent); flex-shrink: 0; }
+  .ig-receita-lista .cnpj { margin-left: auto; color: var(--color-text-faint); font-size: var(--text-xs); white-space: nowrap; }
+  .ig-receita-lista .vazio { padding: var(--space-4); color: var(--color-text-muted); font-size: var(--text-sm); }
+  .ig-falhas { margin: var(--space-3) 0; padding: var(--space-3) var(--space-4); border: 1px solid var(--color-amber); border-radius: var(--radius-md); background: var(--color-amber-bg, var(--color-surface-alt)); font-size: var(--text-sm); }
+  .ig-falhas strong { display: block; margin-bottom: 6px; }
+  .ig-falhas ul { margin: 0; padding-left: 18px; }
+  .ig-falhas li { margin: 3px 0; overflow-wrap: anywhere; }
+  .ig-falhas li span { color: var(--color-text-muted); }
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-marca">
+        <div class="icone"><img src="../assets/logo-mark.png" alt="Privilege"></div>
+        <div class="texto">Privilege<span>Contabilidade e Consultoria</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/pages/dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="/pages/empresas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/><path d="M14 9h5a1 1 0 0 1 1 1v11"/><path d="M9 21V9"/><path d="M4 21h16"/></svg>
+          Empresas
+        </a>
+        <a href="/pages/processos.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          Legalização
+        </a>
+        <a href="/pages/certidoes.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          Certidões
+        </a>
+        <a href="/pages/licencas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg>
+          Licenças
+        </a>
+        <a href="/pages/emails-enviados.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+          E-mails enviados
+        </a>
+        <a href="/pages/usuarios.html" data-permissao="usuarios.gerenciar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Usuários
+        </a>
+        <a href="/pages/auditoria.html" data-permissao="auditoria.ver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v2H8V3a1 1 0 0 1 1-1z"/><rect x="4" y="4" width="16" height="18" rx="2"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg>
+          Auditoria
+        </a>
+        <a href="/pages/contatos-site.html" data-permissao="contatos_site.gerenciar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Contatos do site
+        </a>
+        <a href="/pages/fiscal.html" data-roles="administrador,supervisor_fiscal,colaborador_fiscal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg>
+          Fiscal
+        </a>
+        <a href="/pages/contabilidade.html" data-roles="administrador,supervisor_contabilidade,colaborador_contabilidade">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8.01" y2="10"/><line x1="12" y1="10" x2="12.01" y2="10"/><line x1="16" y1="10" x2="16.01" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+          Contabilidade
+        </a>
+        <a href="/pages/folha-pagamento.html" data-roles="administrador,supervisor_folha_pagamento,colaborador_folha_pagamento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+          Folha de Pagamento
+        </a>
+        <a href="/pages/ajuda.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Ajuda
+        </a>
+      </nav>
+      <div class="sidebar-rodape">
+        <div class="sidebar-usuario">
+          <div class="avatar" id="avatar-usuario"></div>
+          <div class="info">
+            <div class="nome" id="nome-usuario"></div>
+            <div class="papel" id="papel-usuario"></div>
+          </div>
+        </div>
+        <button id="btn-alterar-senha" class="sidebar-acao" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Alterar minha senha</button>
+        <button id="btn-sair" class="sidebar-acao sair" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair do sistema</button>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <button class="btn-menu-mobile" id="btn-menu-mobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="titulo-pagina">Importar guias</h1>
+        </div>
+        <div class="topbar-acoes">
+          <button class="theme-toggle" id="btn-tema" title="Alternar tema claro/escuro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="conteudo">
+        <div class="ig-passos" aria-label="Etapas">
+          <span class="ig-passo ativo" data-passo="1"><span class="n">1</span>Enviar os PDFs</span>
+          <span class="ig-passo" data-passo="2"><span class="n">2</span>Conferir</span>
+          <span class="ig-passo" data-passo="3"><span class="n">3</span>Pronto</span>
+        </div>
+
+        <!-- 1. Envio -->
+        <div class="painel" id="etapa-envio">
+          <div class="painel-cabecalho" style="margin-bottom:var(--space-2);">
+            <div>
+              <h2>Guias em lote</h2>
+              <p class="subtitulo-painel" style="margin:2px 0 0;">Selecione todas as guias em PDF de uma vez (DAS, DARF, FGTS...). O sistema lê o CNPJ de cada uma e coloca na empresa certa.</p>
+            </div>
+          </div>
+          <div class="ig-soltar" id="area-soltar" role="button" tabindex="0" aria-label="Escolher os PDFs das guias">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <strong>Arraste os PDFs das guias para cá</strong>
+            <span>ou clique para escolher — pode selecionar centenas de uma vez</span>
+          </div>
+          <input type="file" id="arquivos" accept="application/pdf,.pdf" multiple hidden>
+          <div class="ig-selecionados" id="selecionados"></div>
+          <div id="area-progresso" style="display:none;">
+            <div class="ig-progresso"><span id="barra-progresso"></span></div>
+            <p class="subtitulo-painel" id="texto-progresso" style="margin:0;"></p>
+          </div>
+          <div class="ig-rodape" style="border-top:none; padding-top:0;">
+            <span></span>
+            <button class="btn" id="btn-ler" disabled>Ler guias</button>
+          </div>
+        </div>
+
+        <!-- 1b. Buscar DAS direto na Receita (Integra Contador) -->
+        <div class="painel" id="painel-receita" style="display:none;">
+          <div class="painel-cabecalho" style="margin-bottom:var(--space-2);">
+            <div>
+              <h2>Ou busque os DAS direto na Receita</h2>
+              <p class="subtitulo-painel" style="margin:2px 0 0;">O sistema gera a guia de cada empresa do Simples Nacional e MEI pelo Integra Contador (SERPRO). Depois é só conferir e enviar, igual aos PDFs.</p>
+            </div>
+          </div>
+          <div class="ig-receita-topo">
+            <div class="campo" style="margin:0;">
+              <label for="periodo-receita">Mês (competência)</label>
+              <input type="month" id="periodo-receita">
+            </div>
+            <div class="campo" style="margin:0; flex:1; min-width:220px;">
+              <label for="busca-receita">Filtrar empresas</label>
+              <input type="search" id="busca-receita" placeholder="Nome ou CNPJ…">
+            </div>
+          </div>
+          <div class="ig-receita-lista" id="lista-receita"></div>
+          <div id="area-progresso-receita" style="display:none;">
+            <div class="ig-progresso"><span id="barra-progresso-receita"></span></div>
+            <p class="subtitulo-painel" id="texto-progresso-receita" style="margin:0;"></p>
+          </div>
+          <div class="ig-falhas" id="falhas-receita" style="display:none;"></div>
+          <div class="ig-rodape" style="border-top:none; padding-top:0;">
+            <span class="ig-lido">Cada guia gerada é cobrada pelo SERPRO. O cliente precisa ter dado procuração ao escritório no e-CAC. Gerar de novo um mês já gerado não dá problema: sai outra guia igual.</span>
+            <button class="btn" id="btn-receita" disabled>Buscar na Receita</button>
+          </div>
+        </div>
+
+        <!-- 2. Conferência -->
+        <div class="painel" id="etapa-conferencia" style="display:none;">
+          <div class="painel-cabecalho">
+            <div>
+              <h2>Confira antes de importar</h2>
+              <p class="subtitulo-painel" style="margin:2px 0 0;">As marcadas vão para a empresa indicada. Escolha a empresa das que não foram encontradas.</p>
+            </div>
+          </div>
+          <div class="ig-falhas" id="falhas-conferencia" style="display:none;"></div>
+          <div class="ig-resumo" id="filtros"></div>
+          <div class="tabela-wrap">
+            <table>
+              <thead><tr><th style="width:36px;"><input type="checkbox" id="marcar-todas" aria-label="Marcar todas" checked></th><th>Arquivo</th><th>Empresa</th><th>Competência</th><th>Vencimento</th><th>Valor</th></tr></thead>
+              <tbody id="tabela-itens"></tbody>
+            </table>
+          </div>
+          <datalist id="lista-empresas"></datalist>
+          <div class="ig-rodape">
+            <label><input type="checkbox" id="enviar-email" checked>
+              <span><strong>Enviar por e-mail para cada cliente</strong>, com as guias da empresa em anexo (um e-mail por empresa). As guias também ficam na Área do Cliente.</span>
+            </label>
+            <div class="ig-acoes">
+              <button class="btn btn-secundario" id="btn-cancelar">Cancelar</button>
+              <button class="btn" id="btn-importar">Importar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Resultado -->
+        <div class="painel" id="etapa-resultado" style="display:none;">
+          <div class="ig-resultado">
+            <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <h2 id="titulo-resultado">Guias importadas</h2>
+            <p id="texto-resultado"></p>
+            <div class="ig-emails" id="status-emails"></div>
+            <div class="ig-acoes" style="margin-top:var(--space-6); justify-content:center;">
+              <a class="btn btn-secundario" href="/pages/emails-enviados.html">Acompanhar os e-mails</a>
+              <button class="btn" id="btn-nova">Importar mais guias</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/importar-guias.js"></script>
+  <script src="../js/assistente.js"></script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login — Sistema Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="login-page">
+  <section class="login-marca" aria-hidden="true">
+    <div class="logo-linha">
+      <div class="icone"><img src="../assets/logo-mark.png" alt=""></div>
+      <div class="nome">Privilege<span>Contabilidade e Consultoria</span></div>
+    </div>
+
+    <div>
+      <h1>Contabilidade completa <em>em um só lugar.</em></h1>
+      <ul class="lista-recursos">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Contabilidade, fiscal e tributário, do lançamento ao balanço
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Departamento pessoal e folha de pagamento com eSocial em dia
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Legalização de empresas, certidões, alvarás e licenças
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Imposto de renda pessoa física e certificado digital
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          BPO financeiro e consultoria para decidir com números
+        </li>
+      </ul>
+    </div>
+
+    <div class="rodape-marca">Uso interno — Privilege Contabilidade e Consultoria</div>
+  </section>
+
+  <main class="login-form-area">
+    <button class="theme-toggle login-tema-toggle" id="btn-tema" title="Alternar tema claro/escuro" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+
+    <div class="login-card">
+      <div class="icone-login"><img src="../assets/logo-mark.png" alt="Privilege"></div>
+      <h2>Bem-vindo de volta</h2>
+      <p class="subtitulo">Entre com seu e-mail e senha do escritório.</p>
+      <form id="form-login">
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" required autocomplete="username" placeholder="nome@privilegecontabilidade.com.br">
+        </div>
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-full">Entrar</button>
+        <div class="erro-msg" id="erro-login"></div>
+      </form>
+      <div class="links-login">
+        <a href="#" id="btn-esqueci-senha">Esqueci minha senha</a>
+        <a href="/pages/cliente-login.html">Sou cliente</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de recuperação de senha -->
+  <div class="modal-fundo" id="modal-esqueci-senha">
+    <div class="modal" style="max-width:400px;">
+      <h2>Recuperar senha</h2>
+      <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4);">
+        Informe seu e-mail cadastrado — se ele existir no sistema, enviaremos um link para você criar uma nova senha.
+      </p>
+      <form id="form-esqueci-senha">
+        <div class="campo">
+          <label>E-mail</label>
+          <input type="email" id="email-recuperacao" required>
+        </div>
+        <div class="erro-msg" id="erro-recuperacao"></div>
+        <div class="acoes-modal">
+          <button type="button" class="btn btn-secundario" id="btn-cancelar-recuperacao">Cancelar</button>
+          <button type="submit" class="btn">Enviar link</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script>
+    inicializarShell(); // conecta o botão de tema (#btn-tema), já existente em api.js
+
+    document.getElementById('form-login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+      const erroEl = document.getElementById('erro-login');
+      erroEl.textContent = '';
+
+      try {
+        const dados = await apiFetch('/auth/login', { method: 'POST', body: { email, senha } });
+        setSessao(dados.token, dados.usuario, dados.permissoes);
+        window.location.href = '/pages/dashboard.html';
+      } catch (err) {
+        erroEl.textContent = err.message;
+      }
+    });
+
+    const modalEsqueciSenha = document.getElementById('modal-esqueci-senha');
+    document.getElementById('btn-esqueci-senha').addEventListener('click', (e) => {
+      e.preventDefault();
+      modalEsqueciSenha.classList.add('aberto');
+    });
+    document.getElementById('btn-cancelar-recuperacao').addEventListener('click', () => {
+      modalEsqueciSenha.classList.remove('aberto');
+    });
+
+    document.getElementById('form-esqueci-senha').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const erroEl = document.getElementById('erro-recuperacao');
+      erroEl.textContent = '';
+
+      try {
+        const dados = await apiFetch('/auth/esqueci-senha', {
+          method: 'POST',
+          body: { email: document.getElementById('email-recuperacao').value.trim() }
+        });
+        notificar(dados.mensagem, 'sucesso');
+        modalEsqueciSenha.classList.remove('aberto');
+      } catch (err) {
+        erroEl.textContent = err.message;
+      }
+    });
+  </script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+# Segredos — nunca versionar (use backend/.env.example como modelo)
+.env
+.env.*
+!.env.example
+
+# Certificados digitais (e-CNPJ do escritório etc.) — nunca versionar
+backend/certificados/
+*.pfx
+*.p12
+
+# Arquivos enviados por usuários/clientes (documentos reais)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Dependências e artefatos
+node_modules/
+npm-debug.log*
+*.log
+
+# Backups do banco
+database/backups/
+*.dump
+*.backup
+
+# Sistema operacional / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Arquivos gerados pela demonstração (npm run demo:preparar)
+backend/demo-arquivos/

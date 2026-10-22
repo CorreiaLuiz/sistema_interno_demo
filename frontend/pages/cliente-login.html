@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Área do Cliente — Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="login-page">
+  <section class="login-marca" aria-hidden="true">
+    <div class="logo-linha">
+      <div class="icone"><img src="../assets/logo-mark.png" alt=""></div>
+      <div class="nome">Privilege<span>Contabilidade e Consultoria</span></div>
+    </div>
+
+    <div>
+      <h1>A sua empresa, <em>a um clique.</em></h1>
+      <ul class="lista-recursos">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Cartão CNPJ, contrato social, certidões e certificado digital para baixar quando precisar
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Esqueceu de pagar uma guia? Peça a 2ª via do DAS, INSS ou FGTS direto ao setor
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Aviso de certidões e certificado digital perto de vencer
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Envie documentos para o escritório sem precisar de e-mail
+        </li>
+      </ul>
+    </div>
+
+    <div class="rodape-marca">Área do Cliente — Privilege Contabilidade e Consultoria</div>
+  </section>
+
+  <main class="login-form-area">
+    <button class="theme-toggle login-tema-toggle" id="btn-tema" title="Alternar tema claro/escuro" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+
+    <div class="login-card">
+      <div class="icone-login"><img src="../assets/logo-mark.png" alt="Privilege"></div>
+      <h2>Área do Cliente</h2>
+      <p class="subtitulo">Entre com o e-mail cadastrado no escritório e a senha que você criou.</p>
+      <form id="form-login">
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" required autocomplete="username" placeholder="seu@email.com.br">
+        </div>
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-full" id="btn-entrar">Entrar</button>
+        <div class="erro-msg" id="erro-login"></div>
+      </form>
+      <div class="links-login">
+        <a href="#" id="btn-esqueci-senha">Esqueci minha senha</a>
+        <a href="/pages/cliente-ajuda.html">Como usar</a>
+        <a href="/pages/sobre.html">Sobre a Privilege</a>
+      </div>
+      <p style="margin-top:var(--space-6); font-size:var(--text-xs); color:var(--color-text-faint); line-height:1.6;">
+        Ainda não tem acesso? Peça ao escritório pelo WhatsApp (46) 3035-1061 — você recebe um link para criar sua senha.
+      </p>
+    </div>
+  </main>
+
+  <div class="modal-fundo" id="modal-esqueci-senha">
+    <div class="modal" style="max-width:400px;">
+      <h2>Esqueci minha senha</h2>
+      <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4);">
+        Informe o e-mail do seu acesso. Enviamos um link para criar uma nova senha por e-mail e WhatsApp.
+      </p>
+      <form id="form-esqueci-senha">
+        <div class="campo">
+          <label for="email-recuperacao">E-mail</label>
+          <input type="email" id="email-recuperacao" required>
+        </div>
+        <div class="erro-msg" id="erro-recuperacao"></div>
+        <div class="acoes-modal">
+          <button type="button" class="btn btn-secundario" id="btn-cancelar-recuperacao">Cancelar</button>
+          <button type="submit" class="btn">Enviar link</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/cliente-api.js"></script>
+  <script>
+    document.getElementById('btn-tema').addEventListener('click', alternarTemaCliente);
+
+    // Já logado? Vai direto para o portal
+    if (tokenCliente()) window.location.replace('/pages/portal-cliente.html' + window.location.hash);
+
+    const emailSalvo = new URLSearchParams(window.location.search).get('email');
+    if (emailSalvo) document.getElementById('email').value = emailSalvo;
+
+    document.getElementById('form-login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const erroEl = document.getElementById('erro-login');
+      const btn = document.getElementById('btn-entrar');
+      erroEl.textContent = '';
+      btn.disabled = true;
+      try {
+        const dados = await clienteFetch('/login', {
+          method: 'POST',
+          semRedirecionar: true,
+          body: { email: document.getElementById('email').value.trim(), senha: document.getElementById('senha').value }
+        });
+        gravarArmazenamento(CHAVE_TOKEN_CLIENTE, dados.token);
+        window.location.href = '/pages/portal-cliente.html' + window.location.hash;
+      } catch (err) {
+        erroEl.textContent = err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    const modal = document.getElementById('modal-esqueci-senha');
+    document.getElementById('btn-esqueci-senha').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('email-recuperacao').value = document.getElementById('email').value.trim();
+      modal.classList.add('aberto');
+    });
+    document.getElementById('btn-cancelar-recuperacao').addEventListener('click', () => modal.classList.remove('aberto'));
+
+    document.getElementById('form-esqueci-senha').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const erroEl = document.getElementById('erro-recuperacao');
+      erroEl.textContent = '';
+      try {
+        const dados = await clienteFetch('/esqueci-senha', {
+          method: 'POST', semRedirecionar: true,
+          body: { email: document.getElementById('email-recuperacao').value.trim() }
+        });
+        notificar(dados.mensagem, 'sucesso');
+        modal.classList.remove('aberto');
+      } catch (err) {
+        erroEl.textContent = err.message;
+      }
+    });
+  </script>
+  <script src="../js/assistente.js"></script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>

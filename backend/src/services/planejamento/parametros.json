@@ -1,0 +1,67 @@
+{
+  "_leia_me": "Aliquotas usadas pelo motor de planejamento. Valores em decimal (0.15 = 15%). Itens marcados 'CONFIRMAR' sao estimativas que o contador deve validar.",
+
+  "lucro_presumido": {
+    "presuncao_irpj": { "comercio": 0.08, "servico": 0.32 },
+    "presuncao_csll": { "comercio": 0.12, "servico": 0.32 },
+    "irpj": 0.15,
+    "irpj_adicional": 0.10,
+    "irpj_limite_adicional_ano": 240000,
+    "csll": 0.09,
+    "pis": 0.0065,
+    "cofins": 0.03,
+    "acrescimo_presuncao_acima_5_milhoes": 0.10,
+    "_obs": "LC 224/2025: presuncao +10% sobre a parcela da receita anual acima de R$ 5 milhoes - CONFIRMAR"
+  },
+
+  "lucro_real": {
+    "irpj": 0.15,
+    "irpj_adicional": 0.10,
+    "irpj_limite_adicional_ano": 240000,
+    "csll": 0.09,
+    "pis": 0.0165,
+    "cofins": 0.076
+  },
+
+  "icms": {
+    "aliquota_interna": { "PR": 0.195 },
+    "credito_compras_interestaduais": 0.12,
+    "_obs": "CONFIRMAR aliquota interna e regimes especiais do estado (ex.: bares/restaurantes). Pode ser sobrescrito por empresa em 'ajustes_empresa'."
+  },
+
+  "iss": {
+    "aliquota_padrao": 0.05,
+    "_obs": "CONFIRMAR aliquota do municipio. Pode ser sobrescrita por empresa em 'ajustes_empresa'."
+  },
+
+  "folha": {
+    "inss_patronal": 0.20,
+    "rat": 0.02,
+    "terceiros": 0.058,
+    "_obs": "Fora do Simples: 20% sobre pro-labore e salarios; RAT e terceiros so sobre salarios CLT. FGTS nao entra (igual em todos os regimes)."
+  },
+
+  "reforma_2027": {
+    "cbs": 0.088,
+    "ibs": 0.001,
+    "_obs": "CONFIRMAR: aliquotas de referencia de 2027 ainda estimadas. Reducoes setoriais em 'ajustes_empresa.reducao_iva'."
+  },
+
+  "formulario": {
+    "vendas_para_pj": {
+      "Principalmente para outras empresas (CNPJ)": 0.8,
+      "Principalmente para consumidor final (CPF)": 0.05,
+      "Metade/metade": 0.5
+    },
+    "compras_de_fornecedor_regime_normal": {
+      "Grandes empresas / indústrias (Presumido ou Real)": 0.9,
+      "Pequenas empresas (Simples/MEI)": 0.1,
+      "Misturado": 0.5,
+      "Quase não tenho compras (só serviços)": 0.5
+    }
+  },
+
+  "ajustes_empresa": {
+    "_exemplo_00000000000000": { "iss": 0.02, "icms_carga_efetiva": 0.032, "reducao_iva": 0.6, "margem_lucro": 0.15 }
+  }
+}

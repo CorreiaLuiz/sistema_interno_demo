@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Planejamento Tributário — Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bordo: #660000; --bordo-esc: #430A0D; --preto: #180608; --dourado: #C99B59; --terracota: #B3714A;
+    --creme: #F7F1E7; --texto: #2B1B1C; --suave: #6B5B55; --borda: #D9CBB8; --erro: #B42318;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: 'Inter', 'Segoe UI', sans-serif; color: var(--texto); font-size: 15px; line-height: 1.5;
+    background: linear-gradient(180deg, var(--preto) 0, var(--bordo-esc) 300px, transparent 300px), var(--creme);
+    min-height: 100vh;
+  }
+  .container { max-width: 640px; margin: 0 auto; padding: 32px 16px 48px; }
+  .marca { text-align: center; color: var(--dourado); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 4px; margin-bottom: 20px; }
+  .card { background: #fff; border: 1px solid #E8DCCB; border-top: 5px solid var(--dourado); border-radius: 14px; box-shadow: 0 12px 40px rgba(67,10,13,.12); padding: 36px; }
+  .topo { border-bottom: 1px solid #EFE6D8; padding-bottom: 20px; margin-bottom: 4px; }
+  .logo { width: 56px; height: 56px; display: block; margin-bottom: 16px; }
+  h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 25px; color: var(--bordo); margin: 0 0 8px; letter-spacing: -.3px; line-height: 1.25; }
+  .topo p { color: var(--suave); margin: 0; font-size: 14px; line-height: 1.6; }
+  .empresa { margin-top: 16px; background: var(--creme); border-left: 4px solid var(--bordo); border-radius: 0 8px 8px 0; padding: 10px 14px; }
+  .empresa b { display: block; color: var(--bordo); font-size: 15px; }
+  .empresa span { color: var(--suave); font-size: 13px; }
+  h2 { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--terracota); margin: 26px 0 4px; padding-top: 20px; border-top: 1px solid #EFE6D8; }
+  h2.primeira { border-top: 0; padding-top: 6px; margin-top: 14px; }
+  .secao-texto { color: var(--suave); font-size: 13px; margin: 2px 0 6px; }
+  .campo { margin-top: 18px; }
+  .rotulo { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; line-height: 1.4; }
+  .obrig { color: var(--terracota); }
+  .ajuda { color: var(--suave); font-size: 12.5px; margin-top: 6px; }
+  input[type=text], input[type=email], textarea {
+    width: 100%; font: inherit; color: var(--texto); background: #fff; border: 1px solid var(--borda); border-radius: 8px;
+    padding: 12px 14px; outline: none; transition: border-color .15s, box-shadow .15s;
+  }
+  textarea { min-height: 80px; resize: vertical; }
+  input::placeholder, textarea::placeholder { color: #A8998F; }
+  input:focus, textarea:focus { border-color: var(--dourado); box-shadow: 0 0 0 3px rgba(201,155,89,.25); }
+  .prefixo { position: relative; }
+  .prefixo span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--suave); font-weight: 600; pointer-events: none; }
+  .prefixo input { padding-left: 42px; }
+  .sufixo { position: relative; max-width: 180px; }
+  .sufixo span { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--suave); font-weight: 600; pointer-events: none; }
+  .opcoes { display: grid; gap: 8px; }
+  .opcao { display: flex; align-items: center; gap: 10px; border: 1px solid var(--borda); border-radius: 8px; padding: 11px 14px; cursor: pointer; transition: border-color .15s, background .15s; font-size: 14.5px; }
+  .opcao:hover { border-color: var(--dourado); }
+  .opcao input { accent-color: var(--bordo); width: 18px; height: 18px; margin: 0; flex: none; }
+  .opcao:has(input:checked) { border-color: var(--bordo); background: #FBF5EA; }
+  .invalido input[type=text], .invalido input[type=email] { border-color: var(--erro); }
+  .invalido .opcao { border-color: #E7B7B2; }
+  .msg-erro { color: var(--erro); font-size: 12.5px; margin-top: 6px; display: none; }
+  .invalido .msg-erro { display: block; }
+  button { width: 100%; height: 52px; margin-top: 28px; border: 0; border-radius: 10px; background: var(--bordo); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .4px; cursor: pointer; transition: background .2s; }
+  button:hover { background: var(--bordo-esc); }
+  button:disabled { opacity: .6; cursor: wait; }
+  .aviso-final { color: var(--suave); font-size: 12.5px; margin-top: 16px; text-align: center; }
+  .erro-geral { background: #FDECEA; color: var(--erro); border-radius: 8px; padding: 10px 14px; margin-top: 16px; display: none; font-size: 14px; }
+  .armadilha { position: absolute; left: -9999px; }
+  .mensagem { text-align: center; }
+  .mensagem .logo { margin: 0 auto 16px; }
+  .mensagem p { color: var(--suave); }
+  [hidden] { display: none !important; }
+  @media (max-width: 520px) {
+    .container { padding: 20px 10px 40px; }
+    .card { padding: 24px 18px; }
+    h1 { font-size: 22px; }
+    .marca { font-size: 11px; letter-spacing: 3px; margin-bottom: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="marca">PRIVILEGE CONTABILIDADE</div>
+
+  <div class="card mensagem" id="carregando"><img class="logo" src="../assets/logo-circulo.png" alt=""><p>Carregando…</p></div>
+
+  <div class="card mensagem" id="aviso" hidden>
+    <img class="logo" src="../assets/logo-circulo.png" alt="">
+    <h1 id="aviso-titulo"></h1>
+    <p id="aviso-texto"></p>
+  </div>
+
+  <form class="card" id="formulario" novalidate hidden>
+    <div class="topo">
+      <img class="logo" src="../assets/logo-circulo.png" alt="Privilege Contabilidade">
+      <h1>Planejamento Tributário</h1>
+      <p>Queremos encontrar o regime tributário mais econômico para a sua empresa — hoje e com a Reforma Tributária de 2027.
+      São perguntas rápidas (cerca de 5 minutos). Se não souber um valor exato, uma estimativa já ajuda.</p>
+      <div class="empresa"><b id="empresa-nome"></b><span id="empresa-cnpj"></span></div>
+      <p class="ajuda" id="ja-respondido" hidden>Você já respondeu este questionário. Se enviar de novo, as respostas anteriores serão substituídas.</p>
+    </div>
+
+    <h2 class="primeira">1. Quem está respondendo</h2>
+    <div class="campo" data-campo="nome">
+      <label class="rotulo" for="nome">Seu nome <span class="obrig">*</span></label>
+      <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Nome completo" maxlength="120">
+      <div class="msg-erro">Informe seu nome.</div>
+    </div>
+    <div class="campo" data-campo="email">
+      <label class="rotulo" for="email">E-mail <span class="obrig">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="voce@empresa.com.br" maxlength="160">
+      <div class="msg-erro">Informe um e-mail válido.</div>
+    </div>
+
+    <h2>2. Clientes e vendas</h2>
+    <p class="secao-texto">Quem compra de você define quanto crédito de imposto seus clientes vão aproveitar com a Reforma Tributária.</p>
+    <div class="campo" data-campo="publico" data-opcoes='["Principalmente para outras empresas (CNPJ)","Principalmente para consumidor final (CPF)","Metade/metade"]'>
+      <div class="rotulo">Para quem sua empresa mais vende? <span class="obrig">*</span></div>
+    </div>
+    <div class="campo" data-campo="regime_clientes" data-opcoes='["Lucro Presumido / Lucro Real (empresas médias e grandes)","Simples Nacional / MEI","Não sei","Não vendo para empresas"]'>
+      <div class="rotulo">Seus clientes empresas costumam ser de qual regime? <span class="obrig">*</span></div>
+    </div>
+    <div class="campo" data-campo="mercado" data-opcoes='["Não, só no meu estado","Vendo para outros estados","Exporto","Outros estados e exporto"]'>
+      <div class="rotulo">Sua empresa vende para outros estados ou exporta? <span class="obrig">*</span></div>
+    </div>
+
+    <h2>3. Faturamento e resultado</h2>
+    <div class="campo" data-campo="faturamento_previsto">
+      <label class="rotulo" for="faturamento">Faturamento esperado para os próximos 12 meses <span class="obrig">*</span></label>
+      <div class="prefixo"><span>R$</span><input type="text" id="faturamento" inputmode="decimal" autocomplete="off" placeholder="0,00"></div>
+      <div class="msg-erro">Informe o faturamento esperado (uma estimativa serve).</div>
+    </div>
+    <div class="campo" data-campo="crescimento" data-opcoes='["Deve diminuir","Estável","Crescer até 30%","Crescer mais de 30%"]'>
+      <div class="rotulo">Qual a expectativa de crescimento? <span class="obrig">*</span></div>
+    </div>
+    <div class="campo" data-campo="margem_estimada_pct">
+      <label class="rotulo" for="margem">De cada R$ 100 vendidos, quanto sobra de lucro depois de todos os custos? <span class="obrig">*</span></label>
+      <div class="sufixo"><input type="text" id="margem" inputmode="decimal" autocomplete="off" placeholder="Ex.: 15" maxlength="5"><span>%</span></div>
+      <div class="ajuda">Uma estimativa já ajuda.</div>
+      <div class="msg-erro">Informe um percentual entre 0 e 100.</div>
+    </div>
+
+    <h2>4. Custos, equipe e sócios</h2>
+    <div class="campo" data-campo="fornecedores" data-opcoes='["Grandes empresas / indústrias (Presumido ou Real)","Pequenas empresas (Simples/MEI)","Misturado","Quase não tenho compras (só serviços)"]'>
+      <div class="rotulo">Seus principais fornecedores são de qual regime? <span class="obrig">*</span></div>
+    </div>
+    <div class="campo" data-campo="folha_planos" data-opcoes='["Não","Sim, contratar","Sim, reduzir equipe","Sim, alterar pró-labore"]'>
+      <div class="rotulo">Pretende contratar funcionários ou mudar o pró-labore nos próximos 12 meses? <span class="obrig">*</span></div>
+    </div>
+    <div class="campo" data-campo="socio_outra_empresa" data-opcoes='["Não","Sim, com mais de 10%","Sim, com até 10%","Sim, é sócio administrador de outra"]'>
+      <div class="rotulo">Algum sócio tem participação em outra empresa? <span class="obrig">*</span></div>
+    </div>
+
+    <h2>5. Planos</h2>
+    <div class="campo">
+      <label class="rotulo" for="investimentos">Tem investimentos grandes previstos (máquinas, obra, veículos, imóveis)?</label>
+      <textarea id="investimentos" name="investimentos" maxlength="2000" placeholder="Descreva e informe o valor aproximado, ou escreva 'não'"></textarea>
+    </div>
+    <div class="campo">
+      <label class="rotulo" for="observacoes">Algo mais que devemos saber sobre a empresa ou os planos futuros?</label>
+      <textarea id="observacoes" name="observacoes" maxlength="2000" placeholder="Opcional"></textarea>
+    </div>
+    <input class="armadilha" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <div class="erro-geral" id="erro-geral" role="alert"></div>
+    <button type="submit" id="enviar">Enviar respostas</button>
+    <p class="aviso-final">Suas respostas são confidenciais e usadas somente pela equipe da Privilege Contabilidade para o seu planejamento tributário.</p>
+  </form>
+</div>
+<script src="../js/questionario-planejamento.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  // Verificação de tipos AOS POUCOS: o sistema continua em JavaScript, nada é
+  // compilado. Só os arquivos que têm "// @ts-check" na 1ª linha são conferidos
+  // (comando: npm run verificar). Para incluir um arquivo, ponha essa linha nele
+  // e corrija o que o verificador apontar.
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "strict": false,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.js"]
+}

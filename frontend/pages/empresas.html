@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empresas — Sistema Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-marca">
+        <div class="icone"><img src="../assets/logo-mark.png" alt="Privilege"></div>
+        <div class="texto">Privilege<span>Contabilidade e Consultoria</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/pages/dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="/pages/empresas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/><path d="M14 9h5a1 1 0 0 1 1 1v11"/><path d="M9 21V9"/><path d="M4 21h16"/></svg>
+          Empresas
+        </a>
+        <a href="/pages/processos.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          Legalização
+        </a>
+        <a href="/pages/certidoes.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          Certidões
+        </a>
+        <a href="/pages/licencas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg>
+          Licenças
+        </a>
+        <a href="/pages/emails-enviados.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+          E-mails enviados
+        </a>
+        <a href="/pages/usuarios.html" data-permissao="usuarios.gerenciar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Usuários
+        </a>
+        <a href="/pages/auditoria.html" data-permissao="auditoria.ver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v2H8V3a1 1 0 0 1 1-1z"/><rect x="4" y="4" width="16" height="18" rx="2"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg>
+          Auditoria
+        </a>
+        <a href="/pages/contatos-site.html" data-permissao="contatos_site.gerenciar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Contatos do site
+        </a>
+        <a href="/pages/fiscal.html" data-roles="administrador,supervisor_fiscal,colaborador_fiscal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg>
+          Fiscal
+        </a>
+        <a href="/pages/contabilidade.html" data-roles="administrador,supervisor_contabilidade,colaborador_contabilidade">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8.01" y2="10"/><line x1="12" y1="10" x2="12.01" y2="10"/><line x1="16" y1="10" x2="16.01" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+          Contabilidade
+        </a>
+        <a href="/pages/folha-pagamento.html" data-roles="administrador,supervisor_folha_pagamento,colaborador_folha_pagamento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+          Folha de Pagamento
+        </a>
+        <a href="/pages/ajuda.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Ajuda
+        </a>
+      </nav>
+      <div class="sidebar-rodape">
+        <div class="sidebar-usuario">
+          <div class="avatar" id="avatar-usuario"></div>
+          <div class="info">
+            <div class="nome" id="nome-usuario"></div>
+            <div class="papel" id="papel-usuario"></div>
+          </div>
+        </div>
+        <button id="btn-alterar-senha" class="sidebar-acao" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Alterar minha senha</button>
+        <button id="btn-sair" class="sidebar-acao sair" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair do sistema</button>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <button class="btn-menu-mobile" id="btn-menu-mobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="titulo-pagina">Empresas</h1>
+        </div>
+        <div class="topbar-acoes">
+          <form id="form-busca-global" style="margin:0;">
+            <input type="text" id="busca-global" placeholder="Buscar empresa por nome ou CNPJ…" aria-label="Buscar empresa">
+          </form>
+          <button class="theme-toggle" id="btn-tema" title="Alternar tema claro/escuro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="conteudo">
+    <div class="painel">
+      <div class="painel-cabecalho">
+        <h2>Empresas cadastradas</h2>
+        <button class="btn" id="btn-nova-empresa" data-permissao="empresas.editar">+ Nova Empresa</button>
+      </div>
+
+      <div class="filtros" style="margin-bottom:1rem;">
+        <input type="text" id="filtro-busca" placeholder="Buscar por razão social, fantasia ou CNPJ">
+        <select id="filtro-situacao">
+          <option value="">Todas as situações</option>
+          <option value="ativa">Ativa</option>
+          <option value="suspensa">Suspensa</option>
+          <option value="baixada">Baixada</option>
+          <option value="em_legalizacao">Em legalização</option>
+          <option value="saiu_escritorio">Saiu do escritório</option>
+        </select>
+        <button class="btn btn-secundario" id="btn-filtrar">Filtrar</button>
+        <button class="btn btn-secundario" id="btn-exportar" type="button" title="Baixar a lista em planilha (Excel)">Exportar Excel</button>
+      </div>
+
+      <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Razão Social</th>
+            <th>CNPJ</th>
+            <th>Regime</th>
+            <th>Situação</th>
+            <th>Cidade/UF</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-empresas"></tbody>
+      </table>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:var(--space-4);">
+        <button class="btn btn-secundario" id="btn-pagina-anterior">← Anterior</button>
+        <span id="info-pagina" style="font-size:var(--text-sm); color:var(--color-text-muted);"></span>
+        <button class="btn btn-secundario" id="btn-proxima-pagina">Próxima →</button>
+      </div>
+    </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal de cadastro/edição -->
+  <div class="modal-fundo" id="modal-empresa">
+    <div class="modal">
+      <h2 id="titulo-modal">Nova Empresa</h2>
+      <form id="form-empresa">
+        <input type="hidden" id="empresa-id">
+        <div class="grid-2">
+          <div class="campo">
+            <label>Razão Social *</label>
+            <input type="text" id="razao_social" required>
+          </div>
+          <div class="campo">
+            <label>Nome Fantasia</label>
+            <input type="text" id="nome_fantasia">
+          </div>
+          <div class="campo">
+            <label>CNPJ *</label>
+            <input type="text" id="cnpj" placeholder="00.000.000/0000-00" required>
+          </div>
+          <div class="campo">
+            <label>Regime Tributário</label>
+            <select id="regime_tributario">
+              <option value="simples_nacional">Simples Nacional</option>
+              <option value="lucro_presumido">Lucro Presumido</option>
+              <option value="lucro_real">Lucro Real</option>
+              <option value="mei">MEI</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Situação</label>
+            <select id="situacao">
+              <option value="ativa">Ativa</option>
+              <option value="suspensa">Suspensa</option>
+              <option value="baixada">Baixada</option>
+              <option value="em_legalizacao">Em legalização</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Cidade</label>
+            <input type="text" id="cidade">
+          </div>
+          <div class="campo">
+            <label>UF</label>
+            <input type="text" id="uf" maxlength="2">
+          </div>
+          <div class="campo">
+            <label>Telefone</label>
+            <input type="text" id="telefone">
+          </div>
+          <div class="campo">
+            <label>E-mail</label>
+            <input type="email" id="email">
+            <p id="outros-destinatarios" style="display:none; margin:6px 0 0; font-size:var(--text-xs); line-height:1.5; color:var(--color-text-muted);"></p>
+          </div>
+        </div>
+
+        <!-- Dados do informativo interno enviado a todo o escritório quando a empresa entra -->
+        <p style="font-size:var(--text-xs); color:var(--color-text-muted); margin:var(--space-3) 0 var(--space-2);">
+          Informativo de entrada — ao cadastrar, todo o escritório recebe um e-mail com estes dados.
+        </p>
+        <div class="grid-2">
+          <div class="campo">
+            <label>Competência de início</label>
+            <input type="month" id="competencia_inicio">
+          </div>
+          <div class="campo">
+            <label>Fator R</label>
+            <select id="fator_r">
+              <option value="">Não informado</option>
+              <option value="nao">Empresa NÃO terá fator R</option>
+              <option value="sim">Empresa terá fator R</option>
+            </select>
+          </div>
+        </div>
+        <div class="campo">
+          <label>Pró-labore</label>
+          <input type="text" id="pro_labore" maxlength="255" placeholder="Ex: Iniciar a retirada assim que a empresa for aberta, em um salário mínimo">
+        </div>
+        <div class="campo">
+          <label>Observações</label>
+          <textarea id="observacoes" rows="2"></textarea>
+        </div>
+        <div class="campo" id="campo-responsavel-legalizacao">
+          <label>Responsável pela Legalização (abertura) — opcional</label>
+          <select id="responsavel_legalizacao_id">
+            <option value="">— Não atribuir agora —</option>
+          </select>
+          <p style="font-size:var(--text-xs); color:var(--color-text-muted); margin-top:0.3rem;">
+            Se escolher alguém, o processo de abertura já é criado automaticamente,
+            atribuído a essa pessoa, e ela recebe um e-mail avisando.
+          </p>
+        </div>
+        <div class="erro-msg" id="erro-empresa"></div>
+        <div class="acoes-modal">
+          <button type="button" class="btn btn-secundario" id="btn-cancelar">Cancelar</button>
+          <button type="submit" class="btn">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Área do Cliente (logins dos clientes desta empresa) -->
+  <div class="modal-fundo" id="modal-portal">
+    <div class="modal" style="max-width:640px;">
+      <h2>Área do Cliente</h2>
+      <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4);">
+        <strong id="portal-nome-empresa"></strong><br>
+        Libere o acesso pelo e-mail do cliente. Ele recebe, por e-mail e WhatsApp, um link para criar a própria senha
+        e passa a ver os documentos marcados como "visível para o cliente" e a fazer pedidos aos setores.
+      </p>
+
+      <form id="form-acesso-cliente" style="margin-bottom:var(--space-4); border-bottom:1px solid var(--color-border); padding-bottom:var(--space-4);">
+        <div class="grid-2">
+          <div class="campo">
+            <label for="acesso-email">E-mail do cliente (será o login) *</label>
+            <input type="email" id="acesso-email" required placeholder="cliente@empresa.com.br">
+          </div>
+          <div class="campo">
+            <label for="acesso-nome">Nome</label>
+            <input type="text" id="acesso-nome" maxlength="150" placeholder="Ex: João (sócio)">
+          </div>
+          <div class="campo">
+            <label for="acesso-telefone">WhatsApp do cliente</label>
+            <input type="text" id="acesso-telefone" maxlength="20" placeholder="(46) 99999-9999">
+          </div>
+        </div>
+        <div class="erro-msg" id="erro-acesso-cliente"></div>
+        <button type="submit" class="btn" id="btn-liberar-acesso">Liberar acesso e enviar convite</button>
+      </form>
+
+      <div id="link-convite-box" style="display:none; margin-bottom:var(--space-4); padding:var(--space-4); border:1px dashed var(--color-border-strong); border-radius:var(--radius-md); background:var(--color-surface-alt);">
+        <p style="font-size:var(--text-sm); margin-bottom:var(--space-2);" id="link-convite-texto"></p>
+        <div style="display:flex; gap:var(--space-2); flex-wrap:wrap;">
+          <input type="text" id="link-convite" readonly style="flex:1; min-width:200px; height:var(--control-h); padding:0 var(--space-3); border:1px solid var(--color-border-strong); border-radius:var(--radius-sm); background:var(--color-surface); font-family:var(--font-mono); font-size:var(--text-xs);">
+          <button type="button" class="btn btn-secundario" id="btn-copiar-convite">Copiar link</button>
+        </div>
+      </div>
+
+      <h3 style="font-size:var(--text-base); margin-bottom:var(--space-2);">Quem tem acesso</h3>
+      <div id="lista-acessos-cliente"></div>
+
+      <h3 style="font-size:var(--text-base); margin:var(--space-5) 0 var(--space-2);">Últimos downloads do cliente</h3>
+      <div id="lista-downloads-cliente"></div>
+
+      <div class="acoes-modal">
+        <button type="button" class="btn btn-secundario" id="btn-fechar-portal">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Certificado Digital -->
+  <div class="modal-fundo" id="modal-certificado">
+    <div class="modal">
+      <h2>Certificado Digital</h2>
+      <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4);">
+        Controle de validade do certificado digital da empresa (e-CNPJ/e-CPF do responsável).
+      </p>
+
+      <form id="form-certificado" style="margin-bottom:var(--space-4); border-bottom:1px solid var(--color-border); padding-bottom:var(--space-4);">
+        <input type="hidden" id="certificado-id">
+        <div class="grid-2">
+          <div class="campo">
+            <label>Tipo</label>
+            <select id="certificado-tipo">
+              <option value="e-cnpj">e-CNPJ</option>
+              <option value="e-cpf">e-CPF (do responsável)</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Número de série</label>
+            <input type="text" id="certificado-serie" placeholder="Opcional">
+          </div>
+          <div class="campo">
+            <label>Data de emissão</label>
+            <input type="date" id="certificado-emissao">
+          </div>
+          <div class="campo">
+            <label>Data de validade</label>
+            <input type="date" id="certificado-validade">
+          </div>
+        </div>
+        <div class="campo">
+          <label>Observações</label>
+          <input type="text" id="certificado-observacoes" placeholder="Opcional">
+        </div>
+        <div class="erro-msg" id="erro-certificado"></div>
+        <button type="submit" class="btn">Salvar</button>
+      </form>
+
+      <div id="lista-certificados"></div>
+
+      <div class="acoes-modal">
+        <button type="button" class="btn btn-secundario" id="btn-fechar-certificado">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de consulta automática de CNDs -->
+  <div class="modal-fundo" id="modal-cnds">
+    <div class="modal">
+      <h2>CND Federal</h2>
+      <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4);">
+        Certidão de débitos federais (Receita Federal e PGFN), direto do SERPRO.
+      </p>
+      <div class="cnd-cartao">
+        <div class="cabecalho-acao">
+          <span class="nome-tipo">Situação</span>
+          <span class="badge badge-emissao_pendente" id="cnd-badge">—</span>
+        </div>
+        <div class="cnd-resultado" id="cnd-resultado"></div>
+        <div class="cnd-acoes">
+          <button type="button" class="btn" id="cnd-buscar">Consultar agora</button>
+          <button type="button" class="btn btn-secundario" id="cnd-pdf" style="display:none;">Abrir PDF da certidão</button>
+        </div>
+        <p class="cnd-aviso" id="cnd-nao-configurado" style="display:none;">
+          A emissão direta da CND ainda não está ligada (falta contratar a "Consulta CND" do SERPRO). Use a situação fiscal abaixo: ela mostra a certidão já emitida e as pendências.
+        </p>
+        <p class="cnd-aviso">Cada consulta é cobrada pelo SERPRO. O PDF fica salvo nos documentos da empresa e aparece na Área do Cliente.</p>
+      </div>
+      <div class="cnd-cartao" id="sitfis-cartao" style="display:none; margin-top:var(--space-4);">
+        <div class="cabecalho-acao">
+          <span class="nome-tipo">Situação fiscal (Receita + PGFN)</span>
+          <span class="badge badge-emissao_pendente" id="sitfis-badge">—</span>
+        </div>
+        <div class="cnd-resultado" id="sitfis-resultado"></div>
+        <div class="cnd-acoes">
+          <button type="button" class="btn" id="sitfis-buscar">Ver situação fiscal</button>
+          <button type="button" class="btn btn-secundario" id="sitfis-pdf" style="display:none;">Abrir relatório (PDF)</button>
+        </div>
+        <p class="cnd-aviso">Relatório do e-CAC pelo Integra Contador: mostra se há pendências e a certidão já emitida (se houver, a CND acima é atualizada). Cada consulta é cobrada pelo SERPRO. O PDF fica nos documentos da empresa, só para a equipe.</p>
+      </div>
+      <div class="acoes-modal">
+        <button type="button" class="btn btn-secundario" id="btn-fechar-cnds">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de documentos vinculados à empresa -->
+  <div class="modal-fundo" id="modal-documentos">
+    <div class="modal">
+      <h2>Documentos</h2>
+
+      <form id="form-upload-documento" style="margin-bottom:1rem; border-bottom:1px solid var(--color-border); padding-bottom:1rem;">
+        <div class="grid-2">
+          <div class="campo">
+            <label>Arquivo (PDF, PNG, JPG ou certificado .pfx)</label>
+            <input type="file" id="arquivo-documento" accept=".pdf,.png,.jpg,.jpeg,.pfx,.p12" required>
+          </div>
+          <div class="campo">
+            <label>Categoria</label>
+            <select id="categoria-documento" required>
+              <option value="">Escolha a categoria…</option>
+              <option value="alvara">Alvará</option>
+              <option value="cartao_cnpj">Cartão CNPJ</option>
+              <option value="certidao">Certidão</option>
+              <option value="certificado_digital">Certificado Digital</option>
+              <option value="comprovante">Comprovante</option>
+              <option value="contrato_social">Contrato Social</option>
+              <option value="documento_pessoal">Documento Pessoal</option>
+              <option value="guia">Guia</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+        </div>
+        <div class="campo" id="campo-descricao-documento" style="display:none;">
+          <label>Descrição do documento</label>
+          <input type="text" id="descricao-documento" placeholder="Do que se trata este arquivo?" maxlength="255">
+        </div>
+        <label style="display:flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); margin-bottom:var(--space-3); cursor:pointer;">
+          <input type="checkbox" id="visivel-cliente-documento" checked>
+          Visível para o cliente na Área do Cliente
+        </label>
+        <label style="display:flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); margin-bottom:var(--space-3); cursor:pointer;">
+          <input type="checkbox" id="email-cliente-documento">
+          Enviar também por e-mail para o cliente (com o arquivo em anexo)
+        </label>
+        <div class="erro-msg" id="erro-upload"></div>
+        <div id="ok-upload" style="display:none; font-size:var(--text-sm); color:var(--color-emerald); margin-bottom:var(--space-2);"></div>
+        <button type="submit" class="btn">Enviar Documento</button>
+      </form>
+
+      <div class="filtros" style="justify-content:space-between; align-items:center; margin-bottom:var(--space-2);">
+        <strong style="font-size:var(--text-sm);">Documentos enviados</strong>
+        <select id="ordem-documentos" aria-label="Ordenar documentos">
+          <option value="recentes">Mais recentes primeiro</option>
+          <option value="nome">Nome (A a Z)</option>
+          <option value="categoria">Categoria (A a Z)</option>
+        </select>
+      </div>
+      <div id="lista-documentos"></div>
+
+      <div class="acoes-modal">
+        <button type="button" class="btn btn-secundario" id="btn-fechar-documentos">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal da esteira de integração da empresa -->
+  <div class="modal-fundo" id="modal-esteira">
+    <div class="modal">
+      <h2>Esteira de integração</h2>
+      <div id="esteira-conteudo"></div>
+      <div class="acoes-modal">
+        <button type="button" class="btn btn-secundario" id="btn-fechar-esteira">Fechar</button>
+        <button type="button" class="btn" id="btn-avancar-esteira" style="display:none;">Concluir minha parte e avançar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de saída da empresa do escritório (só administrador) -->
+  <div class="modal-fundo" id="modal-saida">
+    <div class="modal" style="max-width:520px;">
+      <h2>Registrar saída do escritório</h2>
+      <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-4);">
+        <strong id="saida-nome-empresa"></strong><br>
+        Todo o escritório recebe o e-mail de saída, a empresa passa para
+        "Saiu do escritório" e os links da Área do Cliente são desativados.
+      </p>
+      <form id="form-saida">
+        <div class="campo">
+          <label>Responsabilidade do escritório encerrada em *</label>
+          <input type="date" id="saida-data" required>
+        </div>
+        <div class="campo">
+          <label>Observação (vai no e-mail como "Obs.:")</label>
+          <textarea id="saida-observacao" rows="3" placeholder="Ex: A contabilidade não precisa fazer nada, a partir desta data a empresa passa para outro escritório."></textarea>
+        </div>
+        <div class="erro-msg" id="erro-saida"></div>
+        <div class="acoes-modal">
+          <button type="button" class="btn btn-secundario" id="btn-cancelar-saida">Cancelar</button>
+          <button type="submit" class="btn btn-perigo">Registrar saída e avisar todos</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/empresas.js"></script>
+  <script src="../js/assistente.js"></script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>

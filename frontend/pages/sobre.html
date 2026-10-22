@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sobre a Privilege — Privilege Contabilidade e Consultoria</title>
+<meta name="description" content="Privilege Contabilidade e Consultoria — contabilidade completa em Francisco Beltrão/PR: contábil, fiscal, folha, legalização, IRPF, BPO financeiro e consultoria.">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<script>
+  // Mesmo tema escolhido no sistema (localStorage 'tema'), aplicado antes de pintar a página.
+  (function () {
+    var salvo = null;
+    try { salvo = localStorage.getItem('tema'); } catch (e) {}
+    var escuro = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', salvo || (escuro ? 'dark' : 'light'));
+  })();
+</script>
+<style>
+  /* ===== Página institucional "Sobre a Privilege" — v3 =====
+     Mesma linguagem visual do sistema: painel bordô com linhas de
+     livro-razão, dourado da marca, Montserrat nos títulos.
+     Namespace .sobre-* para não colidir com o app. */
+  .sobre-page { background: var(--color-bg); color: var(--color-text); }
+  .sobre-container { max-width: 1120px; margin: 0 auto; padding: 0 var(--space-6); }
+
+  .sobre-page a:focus-visible,
+  .sobre-page button:focus-visible,
+  .sobre-page input:focus-visible,
+  .sobre-page select:focus-visible { outline: 2px solid var(--brand-gold); outline-offset: 2px; border-radius: 2px; }
+
+  .sobre-page h1, .sobre-page h2, .sobre-page h3 { font-family: var(--font-display); letter-spacing: -0.015em; }
+
+  /* ---------- Botões ---------- */
+  .sobre-btn {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-family: var(--font-body); font-weight: 600; font-size: var(--text-sm);
+    height: 42px; padding: 0 var(--space-5); border-radius: var(--radius-sm);
+    transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    white-space: nowrap;
+  }
+  .sobre-btn svg { width: 16px; height: 16px; }
+  .sobre-btn-ouro { background: var(--brand-gold); color: var(--brand-near-black); }
+  .sobre-btn-ouro:hover { background: #D8AE71; }
+  .sobre-btn-contorno { border: 1px solid rgba(247, 241, 231, 0.35); color: #FFFFFF; }
+  .sobre-btn-contorno:hover { border-color: var(--brand-gold); color: var(--brand-gold); }
+  .sobre-btn-solid { background: var(--color-accent); color: #fff; justify-content: center; }
+  .sobre-btn-solid:hover { background: var(--color-accent-hover); }
+  [data-theme="dark"] .sobre-btn-solid { color: var(--brand-near-black); }
+
+  /* ---------- Header (sobre o hero bordô) ---------- */
+  .sobre-header {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(24, 6, 8, 0.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .sobre-header .sobre-container { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); height: 68px; }
+  .sobre-marca { display: flex; align-items: center; gap: var(--space-3); color: #fff; }
+  .sobre-marca .icone { width: 38px; height: 38px; border-radius: var(--radius-md); background: rgba(255,255,255,0.95); padding: 5px; flex-shrink: 0; }
+  .sobre-marca .icone img { width: 100%; height: 100%; object-fit: contain; }
+  .sobre-marca .nome { font-family: var(--font-display); font-weight: 700; font-size: var(--text-base); line-height: 1.15; }
+  .sobre-marca .nome span { display: block; font-family: var(--font-body); font-weight: 500; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-gold); }
+  .sobre-nav { display: flex; align-items: center; gap: var(--space-6); }
+  .sobre-nav a { font-size: var(--text-sm); color: #D9C4C0; font-weight: 500; }
+  .sobre-nav a:hover { color: var(--brand-gold); }
+  .sobre-header-acoes { display: flex; align-items: center; gap: var(--space-3); }
+  .sobre-tema {
+    width: 38px; height: 38px; border-radius: var(--radius-sm); color: #D9C4C0;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .sobre-tema:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .sobre-tema svg { width: 18px; height: 18px; }
+
+  /* ---------- Hero ---------- */
+  .sobre-hero {
+    position: relative; overflow: hidden; color: #F3E6E2;
+    padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(3rem, 6vw, 4.5rem);
+    background:
+      radial-gradient(110% 80% at 100% 0%, rgba(201, 155, 89, 0.18), transparent 55%),
+      linear-gradient(160deg, var(--brand-near-black) 0%, var(--brand-maroon-deep) 55%, var(--brand-maroon) 100%);
+  }
+  .sobre-hero::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: repeating-linear-gradient(to bottom, rgba(255,255,255,0.035) 0 1px, transparent 1px 44px);
+  }
+  .sobre-hero > * { position: relative; z-index: 1; }
+  .sobre-hero-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .sobre-selo {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--brand-gold); margin-bottom: var(--space-5);
+  }
+  .sobre-selo::before { content: ''; width: 24px; height: 1px; background: var(--brand-gold); }
+  .sobre-hero h1 { font-weight: 700; font-size: clamp(2.1rem, 4.4vw, 3.3rem); line-height: 1.1; letter-spacing: -0.025em; color: #fff; max-width: 17ch; margin-bottom: var(--space-6); }
+  .sobre-hero h1 em { font-style: normal; color: var(--brand-gold); }
+  .sobre-hero .lead { font-size: var(--text-lg); color: #E6D4CF; line-height: 1.65; max-width: 56ch; }
+  .sobre-hero-ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-7); }
+
+  .sobre-ficha {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg); padding: var(--space-6); backdrop-filter: blur(4px);
+  }
+  .sobre-ficha-titulo { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-gold); margin-bottom: var(--space-5); }
+  .sobre-ficha-item { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .sobre-ficha-item .rotulo { font-size: var(--text-sm); color: #C9B3AE; }
+  .sobre-ficha-item .valor { font-family: var(--font-mono); font-weight: 500; font-size: var(--text-sm); color: #fff; text-align: right; }
+
+  /* ---------- Números ---------- */
+  .sobre-numeros { background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
+  .sobre-numeros .sobre-container { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .sobre-numero { padding: var(--space-7) var(--space-5); border-left: 1px solid var(--color-border); }
+  .sobre-numero:first-child { border-left: none; padding-left: 0; }
+  .sobre-numero strong { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; color: var(--color-accent); line-height: 1.1; }
+  .sobre-numero span { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+  /* ---------- Seções ---------- */
+  .sobre-secao { padding: clamp(3rem, 7vw, 5rem) 0; }
+  .sobre-secao.tom-alt { background: var(--color-surface-alt); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .sobre-secao-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-6); margin-bottom: var(--space-8); flex-wrap: wrap; }
+  .sobre-secao-head .sobre-selo { color: var(--color-accent); margin-bottom: var(--space-3); }
+  .sobre-secao-head .sobre-selo::before { background: var(--color-accent); }
+  .sobre-secao h2 { font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.18; max-width: 22ch; }
+  .sobre-secao .desc { color: var(--color-text-muted); font-size: var(--text-base); line-height: 1.65; max-width: 44ch; }
+
+  /* ---------- Áreas de atuação ---------- */
+  .sobre-areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+  .sobre-area {
+    background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg);
+    padding: var(--space-6); display: flex; flex-direction: column;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+  }
+  .sobre-area:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .sobre-area-icone {
+    width: 42px; height: 42px; border-radius: var(--radius-md); margin-bottom: var(--space-5);
+    background: var(--color-accent-bg); color: var(--color-accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sobre-area-icone svg { width: 22px; height: 22px; }
+  .sobre-area h3 { font-weight: 700; font-size: var(--text-lg); margin-bottom: var(--space-2); }
+  .sobre-area > p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; margin-bottom: var(--space-4); }
+  .sobre-area ul { display: grid; gap: var(--space-2); margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+  .sobre-area li { display: flex; gap: var(--space-2); font-size: var(--text-sm); color: var(--color-text); line-height: 1.45; }
+  .sobre-area li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-gold); flex-shrink: 0; margin-top: 0.45em; }
+
+  .sobre-regimes { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-7); font-size: var(--text-sm); color: var(--color-text-muted); }
+  .sobre-chip { display: inline-flex; align-items: center; height: 30px; padding: 0 var(--space-4); border-radius: var(--radius-full); border: 1px solid var(--color-border-strong); background: var(--color-surface); color: var(--color-text); font-weight: 500; font-size: var(--text-sm); }
+
+  /* ---------- Método ---------- */
+  .sobre-passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); counter-reset: passo; }
+  .sobre-passo { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); position: relative; }
+  .sobre-passo .num {
+    font-family: var(--font-mono); font-weight: 600; font-size: var(--text-sm); color: var(--color-accent);
+    display: inline-block; margin-bottom: var(--space-4); padding-bottom: var(--space-2); border-bottom: 2px solid var(--brand-gold);
+  }
+  .sobre-passo h3 { font-weight: 700; font-size: var(--text-lg); margin-bottom: var(--space-2); }
+  .sobre-passo p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.65; }
+
+  /* ---------- Escritório ---------- */
+  .sobre-escritorio { display: grid; grid-template-columns: 1fr 0.95fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .sobre-missao { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.38; border-left: 3px solid var(--brand-gold); padding-left: var(--space-5); }
+  .sobre-valores { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); margin-top: var(--space-7); }
+  .sobre-valor h3 { font-size: var(--text-base); font-weight: 700; margin-bottom: var(--space-1); }
+  .sobre-valor p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; }
+  .sobre-mapa { border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-surface); box-shadow: var(--shadow-sm); }
+  .sobre-mapa iframe { display: block; width: 100%; height: 280px; border: 0; filter: grayscale(0.8) contrast(1.05); }
+  .sobre-mapa-legenda { padding: var(--space-4) var(--space-5); font-size: var(--text-sm); line-height: 1.6; }
+  .sobre-mapa-legenda a { color: var(--color-accent); font-weight: 600; }
+
+  /* ---------- Integrações ---------- */
+  .sobre-integracoes { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; justify-content: space-between; }
+  .sobre-integracoes .rotulo { font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 500; }
+  .sobre-integracoes-lista { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+  /* ---------- Utilidades ---------- */
+  .sobre-utilidades { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  .sobre-utilidade {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+    padding: var(--space-4) var(--space-5); background: var(--color-surface);
+    border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    font-size: var(--text-sm); font-weight: 600; color: var(--color-text);
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+  }
+  .sobre-utilidade:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .sobre-utilidade .seta { color: var(--color-text-faint); }
+
+  /* ---------- Faixa CTA ---------- */
+  .sobre-cta {
+    position: relative; overflow: hidden; color: #F3E6E2; border-radius: var(--radius-lg);
+    padding: clamp(2rem, 5vw, 3.5rem); margin-top: var(--space-8);
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap;
+    background:
+      radial-gradient(90% 120% at 100% 0%, rgba(201, 155, 89, 0.2), transparent 55%),
+      linear-gradient(155deg, var(--brand-near-black), var(--brand-maroon-deep) 60%, var(--brand-maroon));
+  }
+  .sobre-cta p { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.3rem, 2.6vw, 1.8rem); line-height: 1.25; color: #fff; max-width: 24ch; }
+  .sobre-cta p em { font-style: normal; color: var(--brand-gold); }
+
+  /* ---------- FAQ ---------- */
+  .sobre-faq-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(2rem, 5vw, 4rem); }
+  .sobre-faq { border-top: 1px solid var(--color-border); }
+  .sobre-faq-item { border-bottom: 1px solid var(--color-border); }
+  .sobre-faq-pergunta {
+    width: 100%; text-align: left; padding: var(--space-5) 0;
+    font-family: var(--font-body); font-weight: 600; font-size: var(--text-base); color: var(--color-text);
+    display: flex; justify-content: space-between; align-items: center; gap: var(--space-4);
+  }
+  .sobre-faq-pergunta:hover { color: var(--color-accent); }
+  .sobre-faq-pergunta .sinal { color: var(--color-accent); font-size: 1.25rem; line-height: 1; flex-shrink: 0; transition: transform .2s ease; }
+  .sobre-faq-resposta { display: none; padding: 0 0 var(--space-5); font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; max-width: 62ch; }
+  .sobre-faq-item.aberto .sobre-faq-resposta { display: block; }
+  .sobre-faq-item.aberto .sinal { transform: rotate(45deg); }
+
+  /* ---------- Contato / diagnóstico ---------- */
+  .sobre-diagnostico { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(2rem, 5vw, 4rem); }
+  .sobre-contatos { display: grid; gap: var(--space-4); }
+  .sobre-contato { display: flex; gap: var(--space-4); align-items: flex-start; }
+  .sobre-contato .ic { width: 38px; height: 38px; border-radius: var(--radius-md); background: var(--color-accent-bg); color: var(--color-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sobre-contato .ic svg { width: 18px; height: 18px; }
+  .sobre-contato dt { font-size: var(--text-xs); color: var(--color-text-faint); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+  .sobre-contato dd { font-size: var(--text-sm); margin-top: 2px; line-height: 1.55; overflow-wrap: anywhere; }
+  .sobre-diag-form { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-7); box-shadow: var(--shadow-md); }
+  .sobre-diag-form h3 { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-5); }
+  .sobre-diag-form .campo label { text-transform: none; letter-spacing: normal; font-size: var(--text-sm); color: var(--color-text); }
+  .sobre-diag-form .linha { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+  .sobre-diag-form .sobre-btn { width: 100%; }
+  .sobre-diag-form .lgpd { font-size: var(--text-xs); color: var(--color-text-faint); margin-top: var(--space-4); line-height: 1.5; }
+
+  /* ---------- Rodapé ---------- */
+  .sobre-footer { background: var(--brand-near-black); color: rgba(247,241,231,0.7); padding: var(--space-8) 0 var(--space-6); }
+  .sobre-footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-6); }
+  .sobre-footer nav { display: flex; gap: var(--space-6); flex-wrap: wrap; }
+  .sobre-footer nav a { color: rgba(247,241,231,0.65); font-size: var(--text-sm); }
+  .sobre-footer nav a:hover { color: var(--brand-gold); }
+  .sobre-footer-base {
+    margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid rgba(247,241,231,0.12);
+    display: flex; justify-content: space-between; font-size: var(--text-xs); color: rgba(247,241,231,0.45); flex-wrap: wrap; gap: var(--space-2);
+  }
+
+  /* ---------- Responsivo ---------- */
+  @media (max-width: 1000px) {
+    .sobre-nav { display: none; }
+    .sobre-areas, .sobre-utilidades { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 800px) {
+    .sobre-container { padding: 0 var(--space-4); }
+    .sobre-hero-grid, .sobre-escritorio, .sobre-diagnostico, .sobre-faq-grid, .sobre-passos { grid-template-columns: 1fr; }
+    .sobre-numeros .sobre-container { grid-template-columns: 1fr 1fr; }
+    .sobre-numero { padding: var(--space-5) var(--space-4); border-left: none; border-top: 1px solid var(--color-border); }
+    .sobre-numero:nth-child(-n+2) { border-top: none; }
+    .sobre-numero:first-child { padding-left: var(--space-4); }
+    .sobre-numero:nth-child(odd) { padding-left: 0; }
+  }
+  .sobre-hero-grid > *, .sobre-escritorio > *, .sobre-diagnostico > *, .sobre-faq-grid > * { min-width: 0; }
+  @media (max-width: 600px) {
+    .sobre-page { overflow-x: hidden; }
+    .sobre-header-acoes { gap: var(--space-1); }
+    .sobre-header-acoes .sobre-btn-contorno { height: 36px; padding: 0 var(--space-3); font-size: var(--text-xs); }
+    .sobre-hero-ctas .sobre-btn { width: 100%; justify-content: center; }
+    .sobre-ficha { padding: var(--space-5); }
+    .sobre-ficha-item { flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
+    .sobre-ficha-item .valor { text-align: left; }
+    .sobre-areas, .sobre-utilidades, .sobre-valores, .sobre-diag-form .linha { grid-template-columns: 1fr; }
+    .sobre-header-acoes .sobre-btn-ouro { display: none; }
+    .sobre-marca .nome span { display: none; }
+    .sobre-diag-form { padding: var(--space-5); }
+  }
+</style>
+</head>
+<body class="sobre-page">
+
+  <header class="sobre-header">
+    <div class="sobre-container">
+      <a href="#topo" class="sobre-marca">
+        <div class="icone"><img src="../assets/logo-mark.png" alt=""></div>
+        <div class="nome">Privilege<span>Contabilidade e Consultoria</span></div>
+      </a>
+      <nav class="sobre-nav" aria-label="Seções">
+        <a href="#servicos">Serviços</a>
+        <a href="#metodo">Como trabalhamos</a>
+        <a href="#escritorio">Escritório</a>
+        <a href="#utilidades">Utilidades</a>
+        <a href="#perguntas">Dúvidas</a>
+      </nav>
+      <div class="sobre-header-acoes">
+        <button class="sobre-tema" id="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <a href="/pages/cliente-login.html" class="sobre-btn sobre-btn-contorno">Área do Cliente</a>
+        <a href="#contato" class="sobre-btn sobre-btn-ouro">Fale conosco</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="sobre-hero" id="topo">
+    <div class="sobre-container sobre-hero-grid">
+      <div>
+        <div class="sobre-selo">Francisco Beltrão · Paraná</div>
+        <h1>Contabilidade completa para a sua empresa <em>crescer com segurança.</em></h1>
+        <p class="lead">Contábil, fiscal, departamento pessoal, legalização, imposto de renda e gestão financeira em um só escritório. Cuidamos das obrigações da sua empresa e transformamos os números em informação para você decidir.</p>
+        <div class="sobre-hero-ctas">
+          <a href="#contato" class="sobre-btn sobre-btn-ouro">
+            Agendar uma conversa
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#servicos" class="sobre-btn sobre-btn-contorno">Conhecer os serviços</a>
+        </div>
+      </div>
+      <aside class="sobre-ficha" aria-label="Ficha do escritório">
+        <div class="sobre-ficha-titulo">Ficha do escritório</div>
+        <div class="sobre-ficha-item"><span class="rotulo">Sede</span><span class="valor">Francisco Beltrão, PR</span></div>
+        <div class="sobre-ficha-item"><span class="rotulo">Atuação desde</span><span class="valor">2018</span></div>
+        <div class="sobre-ficha-item"><span class="rotulo">Regimes</span><span class="valor">Simples · Presumido · Real</span></div>
+        <div class="sobre-ficha-item"><span class="rotulo">Atendemos</span><span class="valor">MEI, empresas e pessoa física</span></div>
+        <div class="sobre-ficha-item"><span class="rotulo">Atendimento</span><span class="valor">Seg a sex · 8h às 18h</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sobre-numeros" aria-label="Destaques">
+    <div class="sobre-container">
+      <div class="sobre-numero"><strong>8+</strong><span>anos de atuação</span></div>
+      <div class="sobre-numero"><strong>7</strong><span>áreas de serviço</span></div>
+      <div class="sobre-numero"><strong>3</strong><span>regimes tributários</span></div>
+      <div class="sobre-numero"><strong>90</strong><span>dias de transição acompanhada</span></div>
+    </div>
+  </section>
+
+  <section class="sobre-secao" id="servicos">
+    <div class="sobre-container">
+      <div class="sobre-secao-head">
+        <div>
+          <div class="sobre-selo">Serviços</div>
+          <h2>Tudo o que a sua empresa precisa, em um só escritório</h2>
+        </div>
+        <p class="desc">Da abertura do CNPJ ao balanço anual. Uma equipe cuida das obrigações que a lei exige e acompanha os números que você precisa para decidir.</p>
+      </div>
+
+      <div class="sobre-areas">
+        <article class="sobre-area">
+          <div class="sobre-area-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14"/><path d="M4 19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></div>
+          <h3>Contabilidade</h3>
+          <p>Escrituração contábil em dia e relatórios que mostram a saúde real do negócio.</p>
+          <ul>
+            <li>Escrituração contábil e conciliações</li>
+            <li>Balanço patrimonial, DRE e balancetes</li>
+            <li>SPED Contábil (ECD) e ECF</li>
+            <li>Análise de indicadores e resultado</li>
+          </ul>
+        </article>
+
+        <article class="sobre-area">
+          <div class="sobre-area-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h8"/></svg></div>
+          <h3>Fiscal e Tributário</h3>
+          <p>Apuração correta dos impostos e entrega das obrigações no prazo, sem multas.</p>
+          <ul>
+            <li>Apuração de Simples, ICMS, ISS, PIS, COFINS e IPI</li>
+            <li>SPED Fiscal, EFD-Contribuições e DCTF</li>
+            <li>Planejamento tributário e Reforma Tributária (IBS/CBS)</li>
+            <li>Parcelamentos e regularização de débitos</li>
+          </ul>
+        </article>
+
+        <article class="sobre-area">
+          <div class="sobre-area-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></svg></div>
+          <h3>Departamento Pessoal</h3>
+          <p>Folha de pagamento e rotinas trabalhistas conduzidas com cuidado e dentro da lei.</p>
+          <ul>
+            <li>Folha de pagamento e pró-labore</li>
+            <li>Admissões, férias, 13º e rescisões</li>
+            <li>eSocial, FGTS Digital e DCTFWeb</li>
+            <li>Encargos, guias e orientação trabalhista</li>
+          </ul>
+        </article>
+
+        <article class="sobre-area">
+          <div class="sobre-area-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
+          <h3>Legalização de Empresas</h3>
+          <p>Abertura, alteração e baixa com acompanhamento de cada etapa junto aos órgãos.</p>
+          <ul>
+            <li>Abertura, alteração e encerramento</li>
+            <li>Formalização e acompanhamento de MEI</li>
+            <li>Alvarás, licenças e Bombeiros</li>
+            <li>Certidões negativas e regularidade</li>
+          </ul>
+        </article>
+
+        <article class="sobre-area">
+          <div class="sobre-area-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg></div>
+          <h3>Pessoa Física</h3>
+          <p>Imposto de renda feito com atenção para você declarar certo e pagar só o devido.</p>
+          <ul>
+            <li>Declaração de IRPF completa</li>
+            <li>Carnê-leão e ganho de capital</li>
+            <li>Revisão de declarações e malha fina</li>
+            <li>Planejamento patrimonial</li>
+          </ul>
+        </article>
+
+        <article class="sobre-area">
+          <div class="sobre-area-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-6"/><path d="M16 8h4v4"/></svg></div>
+          <h3>Financeiro e Consultoria</h3>
+          <p>Gestão financeira e consultoria para decidir com base em números, não em palpite.</p>
+          <ul>
+            <li>BPO financeiro: contas a pagar e receber</li>
+            <li>Conciliação bancária e fluxo de caixa</li>
+            <li>Relatórios gerenciais, orçamento e projeções</li>
+            <li>Indicadores de desempenho (KPIs)</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="sobre-regimes">
+        <span>Também emitimos <strong>certificado digital</strong> (e-CNPJ e e-CPF). Atendemos:</span>
+        <span class="sobre-chip">MEI</span>
+        <span class="sobre-chip">Simples Nacional</span>
+        <span class="sobre-chip">Lucro Presumido</span>
+        <span class="sobre-chip">Lucro Real</span>
+        <span class="sobre-chip">Pessoa Física</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre-secao tom-alt" id="metodo">
+    <div class="sobre-container">
+      <div class="sobre-secao-head">
+        <div>
+          <div class="sobre-selo">Como trabalhamos</div>
+          <h2>Trocar de contador sem parar a empresa</h2>
+        </div>
+        <p class="desc">Quem troca de contador tem medo de que alguma coisa fique para trás. Seguimos um processo pensado para que nenhuma obrigação em andamento seja interrompida.</p>
+      </div>
+
+      <div class="sobre-passos">
+        <div class="sobre-passo">
+          <span class="num">01</span>
+          <h3>Diagnóstico</h3>
+          <p>Uma conversa de 30 minutos para entender o regime, o volume de trabalho e onde a informação se perde hoje. Sem compromisso.</p>
+        </div>
+        <div class="sobre-passo">
+          <span class="num">02</span>
+          <h3>Organização</h3>
+          <p>Nossa equipe pega a documentação com o contador anterior e organiza tudo. Você não precisa preparar nada antes de começar.</p>
+        </div>
+        <div class="sobre-passo">
+          <span class="num">03</span>
+          <h3>Transição</h3>
+          <p>Acompanhamento dedicado por 90 dias. A troca acontece sem interromper nenhuma obrigação fiscal ou trabalhista em andamento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre-secao" id="escritorio">
+    <div class="sobre-container">
+      <div class="sobre-secao-head">
+        <div>
+          <div class="sobre-selo">O escritório</div>
+          <h2>Contabilidade é um trabalho de confiança</h2>
+        </div>
+        <p class="desc">Endereço fixo e equipe que você conhece pelo nome. Quando você precisar, alguém responde pelos números da sua empresa.</p>
+      </div>
+
+      <div class="sobre-escritorio">
+        <div>
+          <p class="sobre-missao">"Oferecer serviços com qualidade, responsabilidade e excelência, superando as necessidades e expectativas de clientes, colaboradores e da sociedade."</p>
+          <div class="sobre-valores">
+            <div class="sobre-valor"><h3>Visão</h3><p>Ser referência em contabilidade consultiva e gestão financeira, unindo tecnologia e o conhecimento da nossa equipe.</p></div>
+            <div class="sobre-valor"><h3>Proximidade</h3><p>Atendimento por pessoas que conhecem a sua empresa, por WhatsApp, telefone, e-mail ou no escritório.</p></div>
+            <div class="sobre-valor"><h3>Prazo</h3><p>Controle interno de vencimentos, obrigações e certidões para que nada fique para a última hora.</p></div>
+            <div class="sobre-valor"><h3>Transparência</h3><p>Você sabe o que está sendo feito, quanto custa e o que os números estão dizendo.</p></div>
+          </div>
+        </div>
+
+        <div class="sobre-mapa">
+          <iframe
+            src="https://www.google.com/maps?q=Rua+Par%C3%A1+127+Centro+Francisco+Beltr%C3%A3o+PR&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Localização da Privilege Contabilidade — Rua Pará, 127, Centro, Francisco Beltrão, PR"></iframe>
+          <div class="sobre-mapa-legenda">
+            <strong>Rua Pará, 127 — Sala 103, Centro</strong><br>
+            Francisco Beltrão, PR — CEP 85601-290<br>
+            <a href="https://www.google.com/maps/search/?api=1&query=Rua+Par%C3%A1+127+Centro+Francisco+Beltr%C3%A3o+PR" target="_blank" rel="noopener">Abrir no Google Maps ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre-secao tom-alt" style="padding: var(--space-7) 0;">
+    <div class="sobre-container sobre-integracoes">
+      <span class="rotulo">Trabalhamos integrados aos sistemas que sua empresa já usa</span>
+      <div class="sobre-integracoes-lista">
+        <span class="sobre-chip">Omie</span><span class="sobre-chip">Conta Azul</span><span class="sobre-chip">Bling</span><span class="sobre-chip">Okton</span><span class="sobre-chip">eSocial</span><span class="sobre-chip">Domínio</span><span class="sobre-chip">Power BI</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre-secao" id="utilidades">
+    <div class="sobre-container">
+      <div class="sobre-secao-head">
+        <div>
+          <div class="sobre-selo">Utilidades</div>
+          <h2>Certidões e consultas, direto na fonte oficial</h2>
+        </div>
+        <p class="desc">Links diretos para os sites dos próprios órgãos, sem intermediário e sem cadastro.</p>
+      </div>
+
+      <div class="sobre-utilidades">
+        <a class="sobre-utilidade" href="https://solucoes.receita.fazenda.gov.br/Servicos/certidaointernet/pj/emitir" target="_blank" rel="noopener">CND Receita Federal &amp; PGFN <span class="seta">↗</span></a>
+        <a class="sobre-utilidade" href="https://www2.dataprev.gov.br" target="_blank" rel="noopener">CND Previdenciária (INSS) <span class="seta">↗</span></a>
+        <a class="sobre-utilidade" href="https://consulta-crf.caixa.gov.br" target="_blank" rel="noopener">CND FGTS (Caixa) <span class="seta">↗</span></a>
+        <a class="sobre-utilidade" href="https://www.fazenda.pr.gov.br" target="_blank" rel="noopener">CND Estadual (SEFAZ-PR) <span class="seta">↗</span></a>
+        <a class="sobre-utilidade" href="https://www.tst.jus.br/certidao" target="_blank" rel="noopener">CND Trabalhista (TST) <span class="seta">↗</span></a>
+        <a class="sobre-utilidade" href="https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_Solicitacao.asp" target="_blank" rel="noopener">Consulta CNPJ (Receita) <span class="seta">↗</span></a>
+      </div>
+
+      <div class="sobre-cta">
+        <p>Não entregamos só guias. <em>Entregamos a leitura do seu negócio.</em></p>
+        <a href="#contato" class="sobre-btn sobre-btn-ouro">Agendar uma conversa</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre-secao tom-alt" id="perguntas">
+    <div class="sobre-container sobre-faq-grid">
+      <div>
+        <div class="sobre-secao-head" style="margin-bottom: var(--space-4);">
+          <div>
+            <div class="sobre-selo">Dúvidas frequentes</div>
+            <h2>O que costumam nos perguntar</h2>
+          </div>
+        </div>
+        <p class="desc" style="color: var(--color-text-muted); font-size: var(--text-base); line-height: 1.65;">Não encontrou a sua dúvida? <a href="#contato" style="color: var(--color-accent); font-weight: 600;">Fale com a nossa equipe.</a></p>
+      </div>
+
+      <div class="sobre-faq">
+        <div class="sobre-faq-item">
+          <button class="sobre-faq-pergunta" type="button" aria-expanded="false">Quais serviços a Privilege oferece? <span class="sinal">+</span></button>
+          <div class="sobre-faq-resposta">Somos uma contabilidade completa. Fazemos contabilidade, fiscal e tributário, departamento pessoal e folha, legalização de empresas (abertura, alteração e baixa), imposto de renda de pessoa física, certificado digital, BPO financeiro e consultoria. Você pode contratar o pacote completo ou só o que precisar.</div>
+        </div>
+        <div class="sobre-faq-item">
+          <button class="sobre-faq-pergunta" type="button" aria-expanded="false">Qual é o processo para trazer a contabilidade para a Privilege? <span class="sinal">+</span></button>
+          <div class="sobre-faq-resposta">Começamos com uma conversa de diagnóstico. Depois, a nossa equipe pede a documentação ao contador anterior, organiza tudo e acompanha a transição por 90 dias, para que nenhuma obrigação em andamento seja perdida.</div>
+        </div>
+        <div class="sobre-faq-item">
+          <button class="sobre-faq-pergunta" type="button" aria-expanded="false">Vocês atendem Simples Nacional, Lucro Presumido e Lucro Real? <span class="sinal">+</span></button>
+          <div class="sobre-faq-resposta">Sim. Atendemos MEI e empresas do Simples Nacional, do Lucro Presumido e do Lucro Real, além de pessoas físicas. Também avaliamos qual regime é o mais vantajoso para a sua empresa.</div>
+        </div>
+        <div class="sobre-faq-item">
+          <button class="sobre-faq-pergunta" type="button" aria-expanded="false">O que é o BPO Financeiro? <span class="sinal">+</span></button>
+          <div class="sobre-faq-resposta">É deixar a rotina financeira com a gente: contas a pagar e a receber, conciliação bancária e fluxo de caixa. Você continua aprovando os pagamentos e passa a receber relatórios claros sobre o dinheiro da empresa.</div>
+        </div>
+        <div class="sobre-faq-item">
+          <button class="sobre-faq-pergunta" type="button" aria-expanded="false">Como envio documentos e notas fiscais? <span class="sinal">+</span></button>
+          <div class="sobre-faq-resposta">Você pode enviar por e-mail, pelo WhatsApp ou entregar no escritório. Sempre que possível, buscamos as notas e os extratos direto pelos sistemas e integrações que a sua empresa já usa, para diminuir o trabalho manual.</div>
+        </div>
+        <div class="sobre-faq-item">
+          <button class="sobre-faq-pergunta" type="button" aria-expanded="false">Vocês ajudam a abrir uma empresa do zero? <span class="sinal">+</span></button>
+          <div class="sobre-faq-resposta">Sim. Orientamos na escolha do tipo de empresa e do regime tributário e cuidamos de todo o registro: CNPJ, inscrições, alvarás e licenças. Depois disso, seguimos com a contabilidade do dia a dia.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre-secao" id="contato">
+    <div class="sobre-container">
+      <div class="sobre-secao-head">
+        <div>
+          <div class="sobre-selo">Contato</div>
+          <h2>Trinta minutos para entender o seu caso</h2>
+        </div>
+        <p class="desc">Sem custo e sem compromisso. Preencha o formulário ou fale pelo WhatsApp. Respondemos em até 24 horas úteis.</p>
+      </div>
+
+      <div class="sobre-diagnostico">
+        <dl class="sobre-contatos">
+          <div class="sobre-contato">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+            <div><dt>Endereço</dt><dd>Rua Pará, 127 — Sala 103, Centro<br>Francisco Beltrão, PR — CEP 85601-290</dd></div>
+          </div>
+          <div class="sobre-contato">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></div>
+            <div><dt>Telefone</dt><dd>(46) 3035-1018</dd></div>
+          </div>
+          <div class="sobre-contato">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.5 8.5 0 1 1 21 11.5z"/></svg></div>
+            <div><dt>WhatsApp</dt><dd>(46) 3035-1061</dd></div>
+          </div>
+          <div class="sobre-contato">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></div>
+            <div><dt>E-mail</dt><dd>contato@privilegecontabilidade.com.br</dd></div>
+          </div>
+          <div class="sobre-contato">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <div><dt>Atendimento</dt><dd>Segunda a sexta, das 8h às 18h</dd></div>
+          </div>
+        </dl>
+
+        <form class="sobre-diag-form" id="form-diagnostico">
+          <h3>Agende o seu diagnóstico</h3>
+          <div class="campo">
+            <label for="diag-nome">Nome completo *</label>
+            <input id="diag-nome" type="text" placeholder="Seu nome" required>
+          </div>
+          <div class="campo">
+            <label for="diag-email">E-mail *</label>
+            <input id="diag-email" type="email" placeholder="nome@empresa.com.br" required>
+          </div>
+          <div class="linha">
+            <div class="campo">
+              <label for="diag-whats">WhatsApp</label>
+              <input id="diag-whats" type="tel" placeholder="(46) 99999-9999">
+            </div>
+            <div class="campo">
+              <label for="diag-fat">Faixa de faturamento</label>
+              <select id="diag-fat">
+                <option value="">Selecione</option>
+                <option>Até R$ 81 mil/ano</option>
+                <option>R$ 81 mil – R$ 360 mil/ano</option>
+                <option>R$ 360 mil – R$ 4,8 milhões/ano</option>
+                <option>Acima de R$ 4,8 milhões/ano</option>
+              </select>
+            </div>
+          </div>
+          <div class="campo">
+            <label for="diag-obj">Do que você precisa?</label>
+            <select id="diag-obj">
+              <option value="">Selecione</option>
+              <option>Trocar de contador</option>
+              <option>Abrir uma nova empresa</option>
+              <option>Contabilidade e fiscal</option>
+              <option>Folha de pagamento / departamento pessoal</option>
+              <option>Imposto de renda pessoa física</option>
+              <option>Organizar o financeiro (BPO)</option>
+              <option>Planejamento tributário</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <!-- Campo-armadilha contra robôs: escondido de quem usa o site -->
+          <div style="position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+            <label for="diag-site">Não preencha</label>
+            <input id="diag-site" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <button type="submit" class="sobre-btn sobre-btn-solid" id="diag-enviar">Solicitar diagnóstico</button>
+          <p class="diag-retorno" id="diag-retorno" role="status" aria-live="polite" style="margin:10px 0 0; font-size:14px; font-weight:600;"></p>
+          <p class="lgpd">Seus dados são tratados conforme a LGPD e usados apenas para este contato. Você pode pedir a exclusão a qualquer momento.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="sobre-footer">
+    <div class="sobre-container">
+      <div class="sobre-footer-top">
+        <div class="sobre-marca">
+          <div class="icone"><img src="../assets/logo-mark.png" alt=""></div>
+          <div class="nome">Privilege<span>Contabilidade e Consultoria</span></div>
+        </div>
+        <nav aria-label="Rodapé">
+          <a href="#servicos">Serviços</a>
+          <a href="#escritorio">Escritório</a>
+          <a href="#utilidades">Utilidades</a>
+          <a href="#perguntas">Dúvidas</a>
+          <a href="#contato">Contato</a>
+          <a href="/pages/cliente-login.html">Área do Cliente</a>
+          <a href="/pages/login.html">Acesso da equipe</a>
+        </nav>
+      </div>
+      <div class="sobre-footer-base">
+        <span>© 2026 Privilege Contabilidade e Consultoria</span>
+        <span>Rua Pará, 127 — Sala 103, Centro — Francisco Beltrão, PR</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('btn-tema').addEventListener('click', function () {
+      var novo = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', novo);
+      try { localStorage.setItem('tema', novo); } catch (e) {}
+    });
+
+    document.querySelectorAll('.sobre-faq-pergunta').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.sobre-faq-item');
+        item.classList.toggle('aberto');
+        btn.setAttribute('aria-expanded', item.classList.contains('aberto'));
+      });
+    });
+
+    document.getElementById('form-diagnostico').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var form = e.target;
+      var botao = document.getElementById('diag-enviar');
+      var retorno = document.getElementById('diag-retorno');
+      var valor = function (id) { return document.getElementById(id).value; };
+      botao.disabled = true;
+      retorno.textContent = 'Enviando…';
+      retorno.style.color = '';
+      fetch('/api/contatos-site', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome: valor('diag-nome'), email: valor('diag-email'), whatsapp: valor('diag-whats'),
+          faturamento: valor('diag-fat'), objetivo: valor('diag-obj'), site: valor('diag-site') })
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (dados) {
+          if (!r.ok) throw new Error(dados.erro || 'Não foi possível enviar agora.');
+          retorno.textContent = 'Obrigado! Vamos entrar em contato em até 24 horas úteis.';
+          retorno.style.color = '#1d7a4f';
+          form.reset();
+        });
+      }).catch(function (err) {
+        retorno.textContent = err.message + ' Se preferir, chame no WhatsApp (46) 3035-1061.';
+        retorno.style.color = '#a3271f';
+      }).finally(function () { botao.disabled = false; });
+    });
+  </script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>

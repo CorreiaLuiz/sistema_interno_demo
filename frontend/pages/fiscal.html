@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiscal — Sistema Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-setor="fiscal">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-marca">
+        <div class="icone"><img src="../assets/logo-mark.png" alt="Privilege"></div>
+        <div class="texto">Privilege<span>Contabilidade e Consultoria</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/pages/dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="/pages/empresas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/><path d="M14 9h5a1 1 0 0 1 1 1v11"/><path d="M9 21V9"/><path d="M4 21h16"/></svg>
+          Empresas
+        </a>
+        <a href="/pages/processos.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          Legalização
+        </a>
+        <a href="/pages/certidoes.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          Certidões
+        </a>
+        <a href="/pages/licencas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg>
+          Licenças
+        </a>
+        <a href="/pages/emails-enviados.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+          E-mails enviados
+        </a>
+        <a href="/pages/usuarios.html" data-permissao="usuarios.gerenciar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Usuários
+        </a>
+        <a href="/pages/auditoria.html" data-permissao="auditoria.ver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v2H8V3a1 1 0 0 1 1-1z"/><rect x="4" y="4" width="16" height="18" rx="2"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg>
+          Auditoria
+        </a>
+        <a href="/pages/contatos-site.html" data-permissao="contatos_site.gerenciar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Contatos do site
+        </a>
+        <a href="/pages/fiscal.html" data-roles="administrador,supervisor_fiscal,colaborador_fiscal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg>
+          Fiscal
+        </a>
+        <a href="/pages/contabilidade.html" data-roles="administrador,supervisor_contabilidade,colaborador_contabilidade">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8.01" y2="10"/><line x1="12" y1="10" x2="12.01" y2="10"/><line x1="16" y1="10" x2="16.01" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+          Contabilidade
+        </a>
+        <a href="/pages/folha-pagamento.html" data-roles="administrador,supervisor_folha_pagamento,colaborador_folha_pagamento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+          Folha de Pagamento
+        </a>
+        <a href="/pages/ajuda.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Ajuda
+        </a>
+      </nav>
+      <div class="sidebar-rodape">
+        <div class="sidebar-usuario">
+          <div class="avatar" id="avatar-usuario"></div>
+          <div class="info">
+            <div class="nome" id="nome-usuario"></div>
+            <div class="papel" id="papel-usuario"></div>
+          </div>
+        </div>
+        <button id="btn-alterar-senha" class="sidebar-acao" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Alterar minha senha</button>
+        <button id="btn-sair" class="sidebar-acao sair" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair do sistema</button>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <button class="btn-menu-mobile" id="btn-menu-mobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="titulo-pagina">Setor Fiscal</h1>
+        </div>
+        <div class="topbar-acoes">
+          <button class="theme-toggle" id="btn-tema" title="Alternar tema claro/escuro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="conteudo">
+        <div class="painel">
+          <div id="resumo-tarefas" class="resumo-status-wrap"></div>
+        </div>
+
+        <div class="painel">
+          <div class="painel-cabecalho">
+            <h2>Tarefas do Setor Fiscal</h2>
+            <div style="display:flex; gap:var(--space-2); flex-wrap:wrap;"><a class="btn btn-secundario" href="/pages/planejamento.html" data-permissao="planejamento.ver">Planejamento tributário</a><a class="btn btn-secundario" href="/pages/importar-guias.html" data-permissao="guias.importar">Importar guias</a><a class="btn btn-secundario" href="/pages/caixa-postal.html" data-permissao="caixa_postal.usar">Caixa Postal da Receita</a><button class="btn" id="btn-nova-tarefa">+ Nova Tarefa</button></div>
+          </div>
+
+          <div class="filtros" style="margin-bottom:1rem;">
+            <select id="filtro-status">
+              <option value="">Todos os status</option>
+              <option value="pendente">Pendente</option>
+              <option value="em_andamento">Em Andamento</option>
+              <option value="concluido">Concluído</option>
+            </select>
+            <select id="filtro-mostrar" aria-label="Mostrar">
+              <option value="">Todas as tarefas</option>
+              <option value="minhas">Minhas tarefas</option>
+              <option value="atrasadas">Atrasadas</option>
+              <option value="pedidos_cliente">Pedidos de clientes</option>
+            </select>
+            <button class="btn btn-secundario" id="btn-filtrar">Filtrar</button>
+            <button class="btn btn-secundario" id="btn-exportar" type="button" title="Baixar a lista em planilha (Excel)">Exportar Excel</button>
+          </div>
+
+          <div class="tabela-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Empresa</th>
+                <th>Atividade</th>
+                <th>Responsável</th>
+                <th>Prazo</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-tarefas"></tbody>
+          </table>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:var(--space-4);">
+            <button class="btn btn-secundario" id="btn-pagina-anterior">← Anterior</button>
+            <span id="info-pagina" style="font-size:var(--text-sm); color:var(--color-text-muted);"></span>
+            <button class="btn btn-secundario" id="btn-proxima-pagina">Próxima →</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal de nova tarefa -->
+  <div class="modal-fundo" id="modal-tarefa">
+    <div class="modal">
+      <h2>Nova Tarefa</h2>
+      <form id="form-tarefa">
+        <div class="campo">
+          <label>Empresa *</label>
+          <select id="tarefa-empresa" required></select>
+        </div>
+        <div class="campo">
+          <label>Atividades / o que precisa ser feito *</label>
+          <textarea id="tarefa-descricao" rows="3" required placeholder="Ex: Emitir guias de ICMS e apurar impostos do mês"></textarea>
+        </div>
+        <div class="grid-2">
+          <div class="campo">
+            <label>Nome do responsável</label>
+            <input type="text" id="tarefa-responsavel-nome" placeholder="Opcional">
+          </div>
+          <div class="campo">
+            <label>E-mail do responsável (Outlook) *</label>
+            <input type="email" id="tarefa-responsavel-email" required placeholder="nome@privilegecontabilidade.com.br">
+          </div>
+        </div>
+        <div class="campo">
+          <label>Prazo (cria evento no Outlook do responsável)</label>
+          <input type="datetime-local" id="tarefa-prazo" placeholder="Opcional">
+        </div>
+        <div class="erro-msg" id="erro-tarefa"></div>
+        <div class="acoes-modal">
+          <button type="button" class="btn btn-secundario" id="btn-cancelar-tarefa">Cancelar</button>
+          <button type="submit" class="btn">Salvar e Notificar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/tarefas-setor.js"></script>
+  <script src="../js/assistente.js"></script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>

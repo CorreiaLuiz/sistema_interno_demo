@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legalização — Sistema Privilege Contabilidade</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-marca">
+        <div class="icone"><img src="../assets/logo-mark.png" alt="Privilege"></div>
+        <div class="texto">Privilege<span>Contabilidade e Consultoria</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/pages/dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="/pages/empresas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/><path d="M14 9h5a1 1 0 0 1 1 1v11"/><path d="M9 21V9"/><path d="M4 21h16"/></svg>
+          Empresas
+        </a>
+        <a href="/pages/processos.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          Legalização
+        </a>
+        <a href="/pages/certidoes.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          Certidões
+        </a>
+        <a href="/pages/licencas.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg>
+          Licenças
+        </a>
+        <a href="/pages/emails-enviados.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+          E-mails enviados
+        </a>
+        <a href="/pages/usuarios.html" data-permissao="usuarios.gerenciar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Usuários
+        </a>
+        <a href="/pages/auditoria.html" data-permissao="auditoria.ver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v2H8V3a1 1 0 0 1 1-1z"/><rect x="4" y="4" width="16" height="18" rx="2"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg>
+          Auditoria
+        </a>
+        <a href="/pages/contatos-site.html" data-permissao="contatos_site.gerenciar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Contatos do site
+        </a>
+        <a href="/pages/fiscal.html" data-roles="administrador,supervisor_fiscal,colaborador_fiscal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg>
+          Fiscal
+        </a>
+        <a href="/pages/contabilidade.html" data-roles="administrador,supervisor_contabilidade,colaborador_contabilidade">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8.01" y2="10"/><line x1="12" y1="10" x2="12.01" y2="10"/><line x1="16" y1="10" x2="16.01" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+          Contabilidade
+        </a>
+        <a href="/pages/folha-pagamento.html" data-roles="administrador,supervisor_folha_pagamento,colaborador_folha_pagamento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+          Folha de Pagamento
+        </a>
+        <a href="/pages/ajuda.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Ajuda
+        </a>
+      </nav>
+      <div class="sidebar-rodape">
+        <div class="sidebar-usuario">
+          <div class="avatar" id="avatar-usuario"></div>
+          <div class="info">
+            <div class="nome" id="nome-usuario"></div>
+            <div class="papel" id="papel-usuario"></div>
+          </div>
+        </div>
+        <button id="btn-alterar-senha" class="sidebar-acao" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Alterar minha senha</button>
+        <button id="btn-sair" class="sidebar-acao sair" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair do sistema</button>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <button class="btn-menu-mobile" id="btn-menu-mobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="titulo-pagina">Legalização</h1>
+        </div>
+        <div class="topbar-acoes">
+          <form id="form-busca-global" style="margin:0;">
+            <input type="text" id="busca-global" placeholder="Buscar empresa por nome ou CNPJ…" aria-label="Buscar empresa">
+          </form>
+          <button class="theme-toggle" id="btn-tema" title="Alternar tema claro/escuro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="conteudo">
+    <div class="painel">
+      <div class="resumo-status-wrap" id="resumo-status"></div>
+    </div>
+
+    <!-- Alternar entre a lista e o quadro por etapas -->
+    <div class="alternar-visao" role="tablist" aria-label="Forma de ver os processos">
+      <button type="button" class="alternar-visao-btn" data-visao="quadro" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="12" rx="1"/><rect x="17" y="3" width="4" height="8" rx="1"/></svg>
+        Quadro por etapas
+      </button>
+      <button type="button" class="alternar-visao-btn" data-visao="lista" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
+        Lista
+      </button>
+    </div>
+
+    <!-- Quadro (pipeline): cada empresa é um cartão na coluna da etapa em que está -->
+    <div class="painel" id="painel-quadro" style="display:none;">
+      <div class="painel-cabecalho">
+        <div>
+          <h2>Quadro da Legalização</h2>
+          <p class="subtitulo-painel" style="margin:2px 0 0;" id="dica-quadro">Arraste o cartão para a etapa seguinte quando ela for concluída. Clique no cartão para ver etapas e documentos.</p>
+        </div>
+        <button class="btn" id="btn-novo-processo-quadro" data-permissao="legalizacao.editar">+ Novo Processo</button>
+      </div>
+      <div class="abas-quadro" role="tablist" aria-label="Tipo de processo">
+        <button type="button" class="aba-quadro" data-tipo="abertura" role="tab" aria-selected="true">Abertura</button>
+        <button type="button" class="aba-quadro" data-tipo="alteracao" role="tab" aria-selected="false">Alteração</button>
+        <button type="button" class="aba-quadro" data-tipo="baixa" role="tab" aria-selected="false">Baixa</button>
+      </div>
+      <div class="quadro" id="quadro"><div class="estado-vazio">Carregando…</div></div>
+    </div>
+
+    <div class="painel" id="painel-lista">
+      <div class="painel-cabecalho">
+        <h2>Processos de Legalização</h2>
+        <button class="btn" id="btn-novo-processo" data-permissao="legalizacao.editar">+ Novo Processo</button>
+      </div>
+
+      <div class="filtros" style="margin-bottom:1rem;">
+        <select id="filtro-status">
+          <option value="">Todos os status</option>
+          <option value="em_andamento">Em andamento</option>
+          <option value="exigencia">Exigência</option>
+          <option value="concluido">Concluído</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+        <select id="filtro-tipo">
+          <option value="">Todos os tipos</option>
+          <option value="abertura">Abertura</option>
+          <option value="alteracao">Alteração</option>
+          <option value="baixa">Baixa</option>
+        </select>
+        <button class="btn btn-secundario" id="btn-filtrar">Filtrar</button>
+        <button class="btn btn-secundario" id="btn-exportar" type="button" title="Baixar a lista em planilha (Excel)">Exportar Excel</button>
+      </div>
+
+      <div class="tabela-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Tipo</th>
+            <th>Protocolo</th>
+            <th>Órgão</th>
+            <th>Prazo previsto</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-processos"></tbody>
+      </table>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:var(--space-4);">
+        <button class="btn btn-secundario" id="btn-pagina-anterior">← Anterior</button>
+        <span id="info-pagina" style="font-size:var(--text-sm); color:var(--color-text-muted);"></span>
+        <button class="btn btn-secundario" id="btn-proxima-pagina">Próxima →</button>
+      </div>
+    </div>
+        <!-- Pedidos que o cliente faz à Legalização pela Área do Cliente -->
+        <div class="painel" id="pedidos" data-roles="administrador,analista_legalizacao">
+          <div class="painel-cabecalho">
+            <div>
+              <h2>Pedidos dos clientes</h2>
+              <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin-top:2px;">Alvarás, alterações contratuais, certidões e outros pedidos feitos pela Área do Cliente.</p>
+            </div>
+            <div class="filtros" style="margin:0;">
+            <select id="filtro-pedidos" aria-label="Quais pedidos mostrar">
+              <option value="abertos">Aguardando resposta</option>
+              <option value="todos">Todos</option>
+            </select>
+            </div>
+          </div>
+          <div class="tabela-wrap">
+            <table>
+              <thead><tr><th>Empresa</th><th>Pedido</th><th>Recebido em</th><th>Status</th><th>Ações</th></tr></thead>
+              <tbody id="tabela-pedidos-legalizacao"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal de cadastro/edição -->
+  <div class="modal-fundo" id="modal-processo">
+    <div class="modal">
+      <h2 id="titulo-modal">Novo Processo</h2>
+      <form id="form-processo">
+        <input type="hidden" id="processo-id">
+        <div class="campo">
+          <label>Empresa *</label>
+          <select id="empresa_id" required></select>
+        </div>
+        <div class="grid-2">
+          <div class="campo">
+            <label>Tipo *</label>
+            <select id="tipo" required>
+              <option value="abertura">Abertura</option>
+              <option value="alteracao">Alteração</option>
+              <option value="baixa">Baixa</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Status</label>
+            <select id="status">
+              <option value="em_andamento">Em andamento</option>
+              <option value="exigencia">Exigência</option>
+              <option value="concluido">Concluído</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Órgão</label>
+            <input type="text" id="orgao" placeholder="Ex: Junta Comercial, Receita Federal">
+          </div>
+          <div class="campo">
+            <label>Protocolo</label>
+            <input type="text" id="protocolo">
+          </div>
+          <div class="campo">
+            <label>Prazo previsto de conclusão</label>
+            <input type="date" id="data_prevista_conclusao">
+          </div>
+        </div>
+        <div class="campo">
+          <label>Descrição</label>
+          <input type="text" id="descricao" placeholder="Breve descrição do processo">
+        </div>
+        <div class="campo">
+          <label>Observações</label>
+          <textarea id="observacoes" rows="2"></textarea>
+        </div>
+        <div class="campo" id="campo-comentario-status" style="display:none;">
+          <label>Comentário sobre a mudança de status</label>
+          <input type="text" id="comentario_status" placeholder="Ex: Aguardando publicação no Diário Oficial">
+        </div>
+
+        <div id="campo-handoff-setores" style="display:none; border-top:1px solid var(--color-border); padding-top:var(--space-4); margin-top:var(--space-2);">
+          <label style="display:block; font-size:var(--text-xs); font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--color-text-muted); margin-bottom:var(--space-2);">
+            Ao concluir, gerar tarefa automática para (opcional):
+          </label>
+          <div class="grid-2">
+            <div class="campo">
+              <label>E-mail — Fiscal</label>
+              <input type="email" id="handoff-fiscal" placeholder="nome@privilegecontabilidade.com.br">
+            </div>
+            <div class="campo">
+              <label>E-mail — Contabilidade</label>
+              <input type="email" id="handoff-contabilidade" placeholder="nome@privilegecontabilidade.com.br">
+            </div>
+          </div>
+          <div class="campo">
+            <label>E-mail — Folha de Pagamento</label>
+            <input type="email" id="handoff-folha_pagamento" placeholder="nome@privilegecontabilidade.com.br">
+          </div>
+        </div>
+
+        <div class="erro-msg" id="erro-processo"></div>
+        <div class="acoes-modal">
+          <button type="button" class="btn btn-secundario" id="btn-cancelar">Cancelar</button>
+          <button type="submit" class="btn">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de histórico -->
+  <div class="modal-fundo" id="modal-historico">
+    <div class="modal">
+      <h2>Histórico do Processo</h2>
+      <div id="lista-historico" style="font-size:0.9rem;"></div>
+      <div class="acoes-modal">
+        <button type="button" class="btn btn-secundario" id="btn-fechar-historico">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de checklist de etapas do processo -->
+  <div class="modal-fundo" id="modal-etapas">
+    <div class="modal" style="max-width:720px;">
+      <h2 id="titulo-etapas">Etapas e documentos</h2>
+      <p id="subtitulo-etapas" style="font-size:var(--text-sm); color:var(--color-text-muted); margin:-8px 0 var(--space-4);"></p>
+
+      <!-- Checklist de documentos do processo -->
+      <div class="checklist-cabecalho">
+        <h3>Documentos do processo</h3>
+        <span id="progresso-checklist" class="progresso-checklist"></span>
+      </div>
+      <div class="barra-progresso" aria-hidden="true"><span id="barra-checklist"></span></div>
+      <div id="lista-checklist" style="margin-bottom:var(--space-3);"></div>
+      <form id="form-novo-documento-checklist" class="linha-adicionar">
+        <input type="text" id="nome-documento-checklist" placeholder="Adicionar documento exigido (ex: Procuração)" maxlength="150" required aria-label="Nome do documento">
+        <select id="etapa-documento-checklist" aria-label="Etapa em que o documento é usado"></select>
+        <button type="submit" class="btn btn-secundario">+ Adicionar</button>
+      </form>
+      <input type="file" id="arquivo-checklist" accept=".pdf,.png,.jpg,.jpeg" hidden>
+
+      <h3 style="font-size:var(--text-base); margin:var(--space-6) 0 var(--space-3);">Etapas</h3>
+      <div id="lista-etapas" style="margin-bottom:var(--space-4);"></div>
+
+      <form id="form-nova-etapa" style="display:flex; gap:var(--space-2); align-items:flex-end;">
+        <div class="campo" style="flex:1; margin-bottom:0;">
+          <label>Adicionar etapa</label>
+          <input type="text" id="nome-nova-etapa" placeholder="Ex: Averbação na Junta Comercial" required>
+        </div>
+        <button type="submit" class="btn" style="margin-bottom:0;">+ Adicionar</button>
+      </form>
+      <div class="erro-msg" id="erro-etapas"></div>
+
+      <div class="acoes-modal">
+        <button type="button" class="btn btn-secundario" id="btn-fechar-etapas">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de documentos vinculados ao processo -->
+  <div class="modal-fundo" id="modal-documentos">
+    <div class="modal">
+      <h2>Documentos</h2>
+
+      <form id="form-upload-documento" style="margin-bottom:1rem; border-bottom:1px solid var(--color-border); padding-bottom:1rem;">
+        <div class="grid-2">
+          <div class="campo">
+            <label>Arquivo (PDF, PNG ou JPG)</label>
+            <input type="file" id="arquivo-documento" accept=".pdf,.png,.jpg,.jpeg" required>
+          </div>
+          <div class="campo">
+            <label>Categoria</label>
+            <select id="categoria-documento">
+              <option value="comprovante">Comprovante</option>
+              <option value="contrato_social">Contrato Social</option>
+              <option value="documento_pessoal">Documento Pessoal</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+        </div>
+        <div class="campo" id="campo-descricao-documento" style="display:none;">
+          <label>Descrição do documento</label>
+          <input type="text" id="descricao-documento" placeholder="Do que se trata este arquivo?" maxlength="255">
+        </div>
+        <div class="erro-msg" id="erro-upload"></div>
+        <button type="submit" class="btn">Enviar Documento</button>
+      </form>
+
+      <div id="lista-documentos"></div>
+
+      <div class="acoes-modal">
+        <button type="button" class="btn btn-secundario" id="btn-fechar-documentos">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/processos.js"></script>
+  <script src="../js/assistente.js"></script>
+  <script src="../js/demo.js"></script>
+</body>
+</html>
