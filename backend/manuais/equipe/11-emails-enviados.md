@@ -13,9 +13,12 @@ A tela **E-mails enviados** (menu da esquerda) mostra cada e-mail mandado aos cl
 
 - **Abriu?** — se o cliente abriu o e-mail.
 - **Baixou?** — se baixou a guia, pelo botão do e-mail ou pela Área do Cliente.
-- Os quadros no alto contam **Abriram o e-mail**, **Baixaram a guia**, **Ainda não abriram** (vale ligar para o cliente) e **Não foram entregues** (erro no envio). Clique num quadro para filtrar.
+- **Abriram o e-mail** — quadro do alto: quantos abriram.
+- **Baixaram a guia** — quadro do alto: quantos baixaram.
+- **Ainda não abriram** — quadro do alto: vale ligar para o cliente.
+- **Não foram entregues** — quadro do alto: deu erro no envio.
 
-Use o período (últimos 7 dias, 30 dias...), a situação e a busca por empresa, CNPJ, e-mail ou assunto. **"Exportar Excel"** baixa a lista.
+Clique num quadro para filtrar. Use o período (últimos 7 dias, 30 dias...), a situação e a busca por empresa, CNPJ, e-mail ou assunto. **"Exportar Excel"** baixa a lista.
 
 ## Bom saber
 

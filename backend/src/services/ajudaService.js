@@ -88,19 +88,59 @@ function inline(texto) {
   return t;
 }
 
-/** Converte o Markdown do manual em HTML: títulos, listas, imagens com legenda, dicas (> ...), parágrafos. */
+// "- **Termo** — explicação", "- **Termo:** explicação" ou "- **Termo.** explicação"
+const ITEM_TERMO = /^-\s+\*\*(.+?)\*\*\s*(?:[—–:]\s*|(?=\S))(.*)$/;
+const termoFechado = (m) => /[.:?]$/.test(m[1]) || /^[—–:]/.test(m[0].split('**')[2].trim());
+const TIPOS_AVISO = /^(?:\*\*)?(?:atenção|cuidado|importante|não |nunca |confira )/i;
+
+/** Tira as aspas do nome de botão: **"Salvar"** vira o destaque de botão, sem aspas. */
+const textoInline = (t) => inline(String(t).replace(/\*\*"([^"*]+)"\*\*/g, '**$1**'));
+
+/** Blocos de linhas seguidas: "| a | b |" vira tabela; lista só de termos vira lista de definições. */
+function tabelaHtml(linhas) {
+  const celulas = (l) => l.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
+  const [cabecalho, , ...corpo] = linhas;
+  const th = celulas(cabecalho).map((c) => `<th>${textoInline(c)}</th>`).join('');
+  const tr = corpo.map((l) => `<tr>${celulas(l).map((c) => `<td>${textoInline(c)}</td>`).join('')}</tr>`).join('');
+  return `<div class="aj-tabela"><table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table></div>`;
+}
+
+function termosHtml(itens) {
+  return `<dl class="aj-termos">${itens.map((m) => `<div><dt>${textoInline(m[1].replace(/[.:]$/, ''))}</dt><dd>${textoInline(m[2].charAt(0).toUpperCase() + m[2].slice(1))}</dd></div>`).join('')}</dl>`;
+}
+
+function dicaHtml(texto) {
+  const rotulada = /^\*\*(Dica|Importante|Atenção|Cuidado):\*\*\s*(.*)$/i.exec(texto);
+  if (rotulada) {
+    const dica = /dica/i.test(rotulada[1]);
+    return `<div class="ajuda-dica" data-tipo="${dica ? 'dica' : 'aviso'}" data-rotulo="${dica ? 'Dica' : 'Atenção'}">${textoInline(rotulada[2])}</div>`;
+  }
+  return TIPOS_AVISO.test(texto)
+    ? `<div class="ajuda-dica" data-tipo="aviso" data-rotulo="Atenção">${textoInline(texto)}</div>`
+    : `<div class="ajuda-dica" data-tipo="dica" data-rotulo="Bom saber">${textoInline(texto)}</div>`;
+}
+
+/** Converte o Markdown do manual em HTML: títulos, listas, tabelas, termos, imagens com legenda, dicas (> ...), parágrafos. */
 function renderizar(markdown, publico) {
   const linhas = String(markdown).split(/\r?\n/);
   const html = [];
   let lista = null; // 'ol' | 'ul' — o <li> do item atual fica aberto para aceitar sub-itens
   let sublista = false; // itens recuados ("   - ...") dentro do item atual
   let paragrafo = [];
-  const fecharParagrafo = () => { if (paragrafo.length) { html.push(`<p>${inline(paragrafo.join(' '))}</p>`); paragrafo = []; } };
+  const fecharParagrafo = () => {
+    if (!paragrafo.length) return;
+    const texto = paragrafo.join(' ');
+    const quem = /^Quem pode( [^:]+)?:\s*(.*)$/.exec(texto);
+    html.push(quem
+      ? `<p class="aj-quem" data-rotulo="Quem pode${escapar(quem[1] || '')}">${textoInline(quem[2])}</p>`
+      : `<p>${textoInline(texto)}</p>`);
+    paragrafo = [];
+  };
   const fecharSublista = () => { if (sublista) { html.push('</ul>'); sublista = false; } };
   const fecharLista = () => { if (lista) { fecharSublista(); html.push(`</li></${lista}>`); lista = null; } };
 
-  for (const bruta of linhas) {
-    const linha = bruta.trimEnd();
+  for (let i = 0; i < linhas.length; i += 1) {
+    const linha = linhas[i].trimEnd();
     const imagem = /^!\[([^\]]*)\]\(([^)]+)\)\s*$/.exec(linha.trim());
     if (!linha.trim()) { fecharParagrafo(); fecharLista(); continue; }
     if (imagem) {
@@ -111,19 +151,39 @@ function renderizar(markdown, publico) {
     }
     const titulo = /^(#{2,4})\s+(.*)$/.exec(linha);
     if (titulo) { fecharParagrafo(); fecharLista(); const n = Math.min(titulo[1].length + 1, 5); html.push(`<h${n}>${inline(titulo[2])}</h${n}>`); continue; }
-    if (linha.startsWith('> ')) { fecharParagrafo(); fecharLista(); html.push(`<div class="ajuda-dica">${inline(linha.slice(2))}</div>`); continue; }
+    if (linha.startsWith('> ')) { fecharParagrafo(); fecharLista(); html.push(dicaHtml(linha.slice(2))); continue; }
+    if (linha.startsWith('|') && /^\|[\s:|-]+\|$/.test((linhas[i + 1] || '').trim())) {
+      fecharParagrafo(); fecharLista();
+      let fim = i;
+      while (fim < linhas.length && linhas[fim].trim().startsWith('|')) fim += 1;
+      html.push(tabelaHtml(linhas.slice(i, fim)));
+      i = fim - 1;
+      continue;
+    }
+    if (!lista && linha.startsWith('- ')) {
+      let fim = i;
+      while (fim < linhas.length && linhas[fim].startsWith('- ')) fim += 1;
+      const itens = linhas.slice(i, fim).map((l) => ITEM_TERMO.exec(l.trimEnd()));
+      const recuado = /^\s+(\d+\.|-)\s/.test(linhas[fim] || '');
+      if (itens.length >= 2 && !recuado && itens.every((m) => m && m[2] && termoFechado(m))) {
+        fecharParagrafo();
+        html.push(termosHtml(itens));
+        i = fim - 1;
+        continue;
+      }
+    }
     const item = /^(\s*)(\d+\.|-)\s+(.*)$/.exec(linha);
     if (item) {
       fecharParagrafo();
       if (item[1].length >= 2 && lista) {
         // Sub-item: fica dentro do passo atual, sem recomeçar a numeração
         if (!sublista) { html.push('<ul>'); sublista = true; }
-        html.push(`<li>${inline(item[3])}</li>`);
+        html.push(`<li>${textoInline(item[3])}</li>`);
         continue;
       }
       const tipo = item[2] === '-' ? 'ul' : 'ol';
       if (lista !== tipo) { fecharLista(); html.push(`<${tipo}>`); lista = tipo; } else { fecharSublista(); html.push('</li>'); }
-      html.push(`<li>${inline(item[3])}`);
+      html.push(`<li>${textoInline(item[3])}`);
       continue;
     }
     fecharLista();
@@ -131,6 +191,33 @@ function renderizar(markdown, publico) {
   }
   fecharParagrafo(); fecharLista();
   return html.join('\n');
+}
+
+const semAcento = (t) => String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+/** Que tipo de parte é esta: dá a etiqueta e a cor na tela. */
+function tipoDoBloco(titulo, html) {
+  const t = semAcento(titulo);
+  if (/bom saber|cuidado/.test(t)) return ['saber', 'Bom saber'];
+  if (/exemplo/.test(t)) return ['exemplo', 'Exemplo'];
+  if (/^como (o sistema|ler|funciona)|de onde vem|decide/.test(t)) return ['saber', 'Como funciona'];
+  if (html.includes('<ol>')) return ['como', 'Como fazer'];
+  if (html.includes('aj-termos') || html.includes('aj-tabela')) return ['termos', 'O que é cada coisa'];
+  return ['saber', 'Para entender'];
+}
+
+/** Separa o capítulo em partes com etiqueta: "O que é", "Como fazer", "O que é cada coisa", "Bom saber". */
+function emBlocos(html) {
+  return html.split(/(?=<h3>)/).filter((b) => b.trim()).map((bloco) => {
+    const titulo = /^<h3>(.*?)<\/h3>/.exec(bloco);
+    const nome = titulo ? titulo[1].replace(/<[^>]+>/g, '') : '';
+    const [classe, rotulo] = titulo
+      ? tipoDoBloco(nome, bloco)
+      : (/^<ol>/.test(bloco.trim()) ? ['como', 'Como fazer'] : ['oque', 'O que é']);
+    // A etiqueta não repete o título ("Bom saber" embaixo de "Bom saber")
+    const etiqueta = semAcento(nome) === semAcento(rotulo) ? '' : ` data-rotulo="${rotulo}"`;
+    return `<section class="aj-bloco aj-bloco-${classe}"${etiqueta}>\n${bloco.trim()}\n</section>`;
+  }).join('\n');
 }
 
 /** Imagens (que existem) de uma seção, para mostrar na resposta do assistente. */
@@ -142,7 +229,7 @@ function imagensDaSecao(secao, publico) {
 
 /** Manual pronto para a tela de ajuda. */
 function manualParaTela(publico) {
-  return carregarManual(publico).map((s) => ({ id: s.id, titulo: s.titulo, resumo: s.resumo, grupo: s.grupo, html: renderizar(s.markdown, publico) }));
+  return carregarManual(publico).map((s) => ({ id: s.id, titulo: s.titulo, resumo: s.resumo, grupo: s.grupo, html: emBlocos(renderizar(s.markdown, publico)) }));
 }
 
 // ---------------------------------------------------------------------------
@@ -370,4 +457,4 @@ async function responder({ publico, pergunta, historico = [], contexto = '', usa
   return { ...r, secoes };
 }
 
-module.exports = { carregarManual, renderizar, manualParaTela, buscar, responder, iaConfigurada, limparHistorico, manualParaIa, acharNaMemoria, _definirClienteIa, PUBLICOS };
+module.exports = { emBlocos, carregarManual, renderizar, manualParaTela, buscar, responder, iaConfigurada, limparHistorico, manualParaIa, acharNaMemoria, _definirClienteIa, PUBLICOS };

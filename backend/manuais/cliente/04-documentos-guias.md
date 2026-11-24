@@ -5,6 +5,12 @@ resumo: Onde encontrar e baixar as guias e os documentos que o escritório envio
 grupo: Usando a Área do Cliente
 palavras: documento, documentos, guia, guias, das, boleto, baixar, download, imprimir, cartao cnpj, contrato social, certidao, alvara, certificado, pdf, onde esta minha guia
 ---
+## O que é cada coisa
+
+- **Guia** — o documento para pagar um imposto. Aparece com o mês e o vencimento.
+- **Cartão CNPJ** — o documento com os dados da empresa na Receita.
+- **Certificado digital** — o arquivo da assinatura eletrônica da empresa. A senha dele não fica aqui.
+
 ## Baixar uma guia ou documento
 
 1. Clique na aba **"Documentos"**.

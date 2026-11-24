@@ -9,6 +9,15 @@ A tela **Importar guias** coloca as guias em cada empresa e manda por e-mail ao 
 
 Quem pode: administrador, Fiscal e Folha.
 
+## O que é cada coisa
+
+- **Guia** — o PDF do imposto (DAS, DARF, FGTS...). Fica nos documentos da empresa, na categoria Guia.
+- **DAS** — a guia do Simples Nacional e do MEI. O sistema pode buscar direto na Receita.
+- **Mês (competência)** — o mês a que a guia se refere.
+- **Sem empresa** — o sistema não achou a empresa pelo CNPJ da guia. Escolha à mão.
+- **Já importada** — guia que já entrou antes. Vem desmarcada para não mandar repetida.
+- **2ª via** — mandar de novo uma guia já importada, de propósito.
+
 ## Opção 1 — Guias em PDF (DAS, DARF, FGTS...)
 
 1. Arraste os PDFs para o quadro **"Arraste os PDFs das guias para cá"** (ou clique nele para escolher). Pode selecionar centenas de uma vez.

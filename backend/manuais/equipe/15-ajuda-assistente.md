@@ -28,6 +28,13 @@ No menu, **"Ajuda"** abre o manual:
 
 ![Manual](e-ajuda-manual.png)
 
+Cada capítulo é dividido em partes com etiqueta e cor:
+
+- **O que é** — para que serve a tela e quem pode usar.
+- **O que é cada coisa** — o significado de cada situação, botão ou palavra da tela.
+- **Como fazer** — o passo a passo numerado.
+- **Bom saber** e **Como funciona** — o que ajuda a entender o resultado.
+
 ## Ensinar respostas ao assistente (administrador)
 
 O assistente **aprende com as perguntas**: o administrador ensina a resposta certa e, quando alguém perguntar algo parecido, o assistente responde com ela. Funciona mesmo sem a IA ligada.

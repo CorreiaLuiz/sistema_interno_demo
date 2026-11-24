@@ -11,17 +11,22 @@ Quem pode: administrador e setor Contábil.
 
 ![Conferência bancária](e-conferencia.png)
 
+## O que é cada coisa
+
+- **Conferido** — o extrato bate com o Domínio.
+- **Falta importar** — o extrato está na pasta e ainda não foi lançado no Domínio.
+- **Diferença** — o extrato e o Domínio não batem.
+- **Falta extrato** — não há extrato na pasta nem lançamento. Peça ao cliente.
+- **Lançado sem OFX** — há lançamento no Domínio, mas não há extrato na pasta.
+- **Conta não identificada** — extrato de uma conta que não foi ligada a uma conta do Domínio.
+- **Conta encerrada** — nada a conferir depois do último mês com movimento.
+- **Sem movimento** — nada a conferir no mês.
+- **OFX** — o arquivo de extrato que o banco fornece.
+
 ## Conferir
 
 1. Clique em **"Conferir todas"** para conferir todas as empresas, ou em **"Abrir"** na linha de uma empresa.
-2. Cada mês ganha uma situação:
-   - **Conferido** — o extrato bate com o Domínio;
-   - **Falta importar** — o extrato está na pasta e ainda não foi lançado no Domínio;
-   - **Diferença** — o extrato e o Domínio não batem;
-   - **Falta extrato** — não há extrato na pasta nem lançamento (pedir ao cliente);
-   - **Lançado sem OFX** — há lançamento no Domínio, mas não há extrato na pasta;
-   - **Conta não identificada** — extrato de uma conta que não foi ligada a uma conta do Domínio;
-   - **Conta encerrada** e **Sem movimento** — nada a conferir.
+2. Cada mês ganha uma situação (veja "O que é cada coisa").
 3. Dentro da empresa, as pendências aparecem separadas: pasta da empresa, diferenças, extratos sem conta, importar ou lançar, pedir ao cliente, contas encerradas.
 
 ## Filtros

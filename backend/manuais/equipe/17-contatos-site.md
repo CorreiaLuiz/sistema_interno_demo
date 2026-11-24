@@ -9,6 +9,14 @@ Quando alguém preenche o formulário **"Agende o seu diagnóstico"** na página
 
 Quem pode: administrador.
 
+## O que é cada coisa
+
+- **Novo** — pedido que chegou e ninguém atendeu ainda.
+- **Em contato** — o atendimento está em andamento.
+- **Virou cliente** — a pessoa fechou com o escritório.
+- **Descartado** — não vai seguir adiante.
+- **Anotação** — o seu lembrete sobre o atendimento. É salva quando você clica fora do campo.
+
 ## Quando chega um pedido
 
 - Os administradores recebem um **aviso no sininho**.
@@ -18,7 +26,7 @@ Quem pode: administrador.
 
 1. Abra **Contatos do site**.
 2. Veja o nome, o e-mail, o WhatsApp (clique para abrir a conversa), a faixa de faturamento e do que a pessoa precisa.
-3. Mude a **Situação** conforme o atendimento: **Novo**, **Em contato**, **Virou cliente** ou **Descartado**.
+3. Mude a **Situação** conforme o atendimento (veja "O que é cada coisa").
 4. Escreva uma **Anotação** (por exemplo, "liguei dia 20, retornar semana que vem"). Ela é salva quando você clica fora do campo.
 
 Use o filtro de situação para ver só os novos. **"Exportar Excel"** baixa a lista.

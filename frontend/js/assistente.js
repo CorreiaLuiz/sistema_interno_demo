@@ -82,7 +82,7 @@
     <div class="assist-msgs" aria-live="polite"></div>
     <form class="assist-form">
       <textarea rows="1" placeholder="Escreva a sua dúvida…" aria-label="Sua dúvida" maxlength="1500"></textarea>
-      <button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+      <button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5 20.5 12 4 19.5 6.5 12 4 4.5Z"/><line x1="6.5" y1="12" x2="13" y2="12"/></svg></button>
     </form>`;
   document.body.appendChild(painel);
   document.body.appendChild(botao);

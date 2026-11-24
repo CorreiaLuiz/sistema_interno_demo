@@ -7,6 +7,12 @@ palavras: documento, arquivo, anexar, enviar, upload, pdf, cartao cnpj, contrato
 ---
 Cada empresa tem a sua pasta de documentos dentro do sistema.
 
+## O que é cada coisa
+
+- **Categoria** — o tipo do arquivo: Alvará, Cartão CNPJ, Certidão, Certificado Digital, Comprovante, Contrato Social, Documento Pessoal, Guia ou Outro.
+- **Visível para o cliente** — o cliente vê e baixa o arquivo na Área do Cliente, e é avisado por e-mail.
+- **Certificado digital (.pfx)** — o arquivo do certificado. A senha dele nunca fica no sistema.
+
 ## Enviar um documento
 
 1. Em **Empresas**, abra o menu **⋮** da empresa e clique em **"Documentos"**.

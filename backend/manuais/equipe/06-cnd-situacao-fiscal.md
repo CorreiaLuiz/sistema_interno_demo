@@ -9,6 +9,15 @@ No menu **⋮** de cada empresa, a opção **"CND Federal"** abre a situação d
 
 Quem pode: administrador, analista de legalização e analista de certidões.
 
+## O que é cada coisa
+
+- **Situação fiscal** — o relatório das pendências da empresa na Receita e na PGFN, igual ao do e-CAC.
+- **CND Federal** — a certidão federal da empresa. Fica também na tela Certidões.
+- **PGFN** — a Procuradoria da Fazenda, onde ficam as dívidas inscritas em dívida ativa.
+- **Positiva com efeitos de negativa** — a certidão que sai quando o débito está com exigibilidade suspensa. Ela vale como negativa.
+- **Procuração no e-CAC** — a autorização do cliente para o escritório consultar. Sem ela, a Receita recusa.
+- **SERPRO** — o serviço que faz a consulta na Receita. Cada consulta é cobrada.
+
 ## Ver a situação fiscal
 
 1. Em **Empresas**, abra o menu **⋮** da empresa e clique em **"CND Federal"**.

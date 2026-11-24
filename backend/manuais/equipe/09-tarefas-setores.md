@@ -9,6 +9,16 @@ Cada setor tem a sua tela: **Fiscal**, **Contabilidade** e **Folha de Pagamento*
 
 ![Tarefas do setor](e-tarefas.png)
 
+## O que é cada coisa
+
+- **Pendente** — a tarefa ainda não começou.
+- **Em Andamento** — alguém está fazendo.
+- **Concluído** — terminou.
+- **Atrasada** — passou do prazo. Aparece em vermelho e no topo.
+- **Pedido do cliente** — tarefa que veio da Área do Cliente. Só é concluída pelo botão "Concluir e responder".
+- **Supervisor** — vê todas as tarefas do setor e cria tarefas.
+- **Colaborador** — vê só as próprias tarefas.
+
 ## Criar uma tarefa
 
 Quem pode: supervisor do setor e administrador.
@@ -21,7 +31,7 @@ Quem pode: supervisor do setor e administrador.
 
 ## Mudar o status
 
-Na coluna **Status**, escolha **Pendente**, **Em Andamento** ou **Concluído**. Tarefas atrasadas aparecem em vermelho e no topo.
+Na coluna **Status**, escolha **Pendente**, **Em Andamento** ou **Concluído**.
 
 ## Filtrar
 

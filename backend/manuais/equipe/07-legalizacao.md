@@ -7,6 +7,17 @@ palavras: legalizacao, processo, abertura, alteracao, baixa, quadro, etapa, kanb
 ---
 A tela **Legalização** acompanha os processos de **Abertura**, **Alteração** e **Baixa** de empresas.
 
+## O que é cada coisa
+
+- **Abertura, Alteração e Baixa** — os três tipos de processo. Cada um tem a sua aba no quadro.
+- **Cartão** — uma empresa no quadro, com há quantos dias está na etapa, o responsável e os documentos recebidos.
+- **Coluna** — uma etapa do processo, como Junta Comercial, Receita Federal, Inscrição Estadual ou Alvará.
+- **Pendente** — a etapa ainda não começou.
+- **Em andamento** — a etapa está sendo feita.
+- **Exigência** — o órgão pediu alguma coisa e o processo depende disso.
+- **Concluído** — a etapa ou o processo terminou.
+- **Checklist** — as etapas e os documentos do processo. O processo já nasce com o checklist padrão.
+
 ## Quadro por etapas
 
 1. No menu, clique em **"Legalização"**. Abre o **"Quadro por etapas"**.

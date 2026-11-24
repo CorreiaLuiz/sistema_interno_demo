@@ -20,6 +20,11 @@ function pdfDas({ cnpj, razao, mes, venc, valor, numero }) {
     `${numero}   Pagar este documento at\\351`, `${venc} Observa\\347\\365es`, 'Valor Total do Documento', valor,
     'CNPJ   Raz\\343o Social', `${mes}   ${venc}`
   ];
+  return pdfLinhas(linhas);
+}
+
+/** PDF de uma página com estas linhas de texto (acentos em octal: \347 = ç). */
+function pdfLinhas(linhas) {
   const conteudo = 'BT /F1 10 Tf 40 800 Td 14 TL ' + linhas.map((l) => `(${l}) Tj T*`).join(' ') + ' ET';
   const objs = [
     '<< /Type /Catalog /Pages 2 0 R >>',
@@ -68,4 +73,4 @@ function carregarLimpo(caminho) {
   return require(resolvido);
 }
 
-module.exports = { pdfDas, gerarPfx, carregarLimpo };
+module.exports = { pdfDas, pdfLinhas, gerarPfx, carregarLimpo };

@@ -96,6 +96,7 @@ function montarManual({ endpoint, token, indice, conteudo, busca }) {
         <h2>${escapar(s.titulo)}</h2>
         ${s.resumo ? `<p class="aj-lead">${escapar(s.resumo)}</p>` : ''}
         <div class="aj-topicos"></div>
+        <p class="aj-legenda">Nos passos, <strong>assim</strong> aparece o nome de um botão ou campo, ou algo importante. Clique numa imagem para ver maior.</p>
         <div class="aj-corpo">${s.html}</div>
       </article>
       <nav class="aj-navegar" aria-label="Outros assuntos">

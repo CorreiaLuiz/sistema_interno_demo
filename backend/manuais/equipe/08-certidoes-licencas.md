@@ -5,11 +5,17 @@ resumo: Controlar validades de certidões, licenças, alvarás e certificados di
 grupo: Legalização e certidões
 palavras: certidao, cnd, estadual, municipal, trabalhista, fgts, licenca, alvara, bombeiros, vigilancia sanitaria, ambiental, renovar, validade, vencida, a vencer, certificado digital, e-cnpj, e-cpf
 ---
-As telas **Certidões** e **Licenças** controlam as validades. A situação muda sozinha pela data de validade:
-
-- **Válida**; **A vencer** (vence em até 30 dias); **Vencida**; **Emissão pendente** (sem data de validade).
+As telas **Certidões** e **Licenças** controlam as validades. A situação muda sozinha pela data de validade.
 
 ![Tela de certidões](e-certidoes.png)
+
+## O que é cada coisa
+
+- **Válida** — dentro da validade.
+- **A vencer** — vence em até 30 dias.
+- **Vencida** — a validade já passou.
+- **Emissão pendente** — sem data de validade informada.
+- **Renovar** — informa a nova validade. O sistema guarda o histórico das anteriores.
 
 ## Cadastrar uma certidão ou licença
 

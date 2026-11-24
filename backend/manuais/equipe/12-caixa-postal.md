@@ -9,6 +9,15 @@ A tela **Caixa Postal da Receita** mostra se cada empresa tem mensagens não lid
 
 ![Caixa Postal da Receita](e-caixa-postal.png)
 
+## O que é cada coisa
+
+- **Não lidas** — quantas mensagens a empresa tem sem abrir no e-CAC.
+- **Verificar** — traz só a quantidade e os assuntos. Não marca nada como lido.
+- **Ver assuntos** — mostra a lista: assunto, data de envio e data da ciência automática.
+- **Abrir** — mostra o texto completo e conta como leitura na Receita.
+- **Ciência automática** — a data em que a Receita considera a mensagem lida, mesmo sem ninguém abrir. Fica em vermelho quando está próxima.
+- **Intimação** — mensagem cujo prazo começa a contar quando é aberta.
+
 ## Verificar as mensagens
 
 1. Abra **"Caixa Postal da Receita"**.

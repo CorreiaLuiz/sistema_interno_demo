@@ -7,11 +7,20 @@ palavras: planejamento tributario, regime, simples nacional, lucro presumido, lu
 ---
 O **Planejamento tributário** compara o imposto do **Simples Nacional** (o que a empresa paga hoje) com o **Lucro Presumido**, o **Lucro Real** e o **Simples híbrido de 2027** (Reforma Tributária). Usa os dados dos últimos 12 meses do Domínio — só leitura, nada é alterado lá — e as respostas do questionário do cliente.
 
-Fica no botão **"Planejamento tributário"** das telas **Fiscal** e **Contabilidade**.
+Fica no botão **"Planejamento tributário"** da tela **Contabilidade**.
 
-Quem pode: administrador e setores Contábil e Fiscal. **Aprovar** e **enviar ao cliente** é só para administrador e supervisores.
+Quem pode: administrador e setor Contábil. **Aprovar** e **enviar ao cliente** é só para o administrador e a supervisão da Contabilidade.
 
 ![Planejamento tributário](e-planejamento.png)
+
+## O que é cada coisa
+
+- **Analisar empresa** — faz a comparação de uma empresa, com os 12 meses até o mês escolhido.
+- **Radar da carteira** — faz a mesma análise em todas as empresas ativas do Simples com movimento.
+- **Simples híbrido de 2027** — a opção da Reforma Tributária comparada com os outros regimes.
+- **Questionário** — o que o cliente responde e o Domínio não sabe: para quem vende, fornecedores, faturamento previsto.
+- **PDF (rascunho)** — para conferir. Tem a marca de rascunho e os termos técnicos.
+- **PDF do cliente** — gerado ao aprovar, sem a marca de rascunho.
 
 ## Analisar uma empresa
 

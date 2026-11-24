@@ -9,6 +9,17 @@ A tela **Empresas** (menu da esquerda) lista todas as empresas do escritório. D
 
 ![Lista de empresas](e-empresas-lista.png)
 
+## O que é cada coisa
+
+- **Ativa** — empresa funcionando e atendida pelo escritório.
+- **Suspensa** — empresa com a atividade suspensa.
+- **Baixada** — empresa encerrada.
+- **Em legalização** — empresa em processo de abertura.
+- **Saiu do escritório** — deixou de ser cliente: os logins da Área do Cliente são desligados e os alertas de vencimento param.
+- **Ficha da empresa** — a página com tudo da empresa. Abre ao clicar no nome dela.
+- **Esteira** — o caminho da empresa nova: Legalização, Cadastro no Domínio e Fechamento setorial.
+- **Menu ⋮** — as opções de cada empresa, na coluna Ações.
+
 ## Cadastrar uma empresa nova
 
 Quem pode: administrador e analista de legalização.

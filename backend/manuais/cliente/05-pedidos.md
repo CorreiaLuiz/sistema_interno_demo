@@ -23,6 +23,8 @@ Pela aba **"Pedidos"** você pede serviços ao escritório, e o setor responsáv
 
 ## Acompanhar e receber a resposta
 
+Para guias, o **mês de referência (competência)** é o mês a que a guia se refere, não o mês de hoje.
+
 Os pedidos ficam na aba **"Pedidos"** com a situação. Quando o escritório responde, você recebe um aviso por **e-mail e WhatsApp**, a **"Resposta do escritório"** aparece no pedido e o arquivo (ex.: a guia nova) fica em **Documentos**.
 
 ![Lista de pedidos](c-pedidos.png)

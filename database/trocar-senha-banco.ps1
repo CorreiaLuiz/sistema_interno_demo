@@ -71,6 +71,19 @@ Remove-Item Env:PGPASSWORD
 $novoConteudo = [regex]::Replace($conteudo, '(?m)^DB_PASSWORD=[^\r\n]*', { param($m) "DB_PASSWORD=$nova" })
 [IO.File]::WriteAllText($ARQUIVO_ENV, $novoConteudo, $utf8)
 
+# 4. As outras cópias do sistema ao lado (pasta de trabalho, etc.) que entram com o mesmo usuário e a senha antiga
+$pai = Split-Path -Parent $RAIZ
+foreach ($outro in Get-ChildItem $pai -Directory | ForEach-Object { Join-Path $_.FullName 'backend\.env' }) {
+    if (-not (Test-Path $outro) -or ((Resolve-Path $outro).Path -eq (Resolve-Path $ARQUIVO_ENV).Path)) { continue }
+    $texto = [IO.File]::ReadAllText($outro, $utf8)
+    $mesmoUsuario = $texto -match "(?m)^DB_USER=\s*$([regex]::Escape($usuario))\s*$"
+    $mesmaSenha = $texto -match "(?m)^DB_PASSWORD=\s*$([regex]::Escape($senhaAtual))\s*$"
+    if ($mesmoUsuario -and $mesmaSenha) {
+        [IO.File]::WriteAllText($outro, [regex]::Replace($texto, '(?m)^DB_PASSWORD=[^\r\n]*', { param($m) "DB_PASSWORD=$nova" }), $utf8)
+        Write-Host "Também atualizei: $outro"
+    }
+}
+
 Write-Host ''
 Write-Host 'Pronto! Senha do banco trocada e .env atualizado.' -ForegroundColor Green
 Write-Host 'Agora feche e abra de novo o servidor (npm run dev).'

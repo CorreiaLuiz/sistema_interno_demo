@@ -8,14 +8,18 @@ palavras: inicio, tela inicial, atencao, vencendo, vencido, certidao, licenca, c
 Depois de entrar, você vê a tela **Início**, com a sua empresa:
 
 - **Precisa de atenção** — certidões, licenças e certificado digital vencidos ou que vencem em até 30 dias.
-- Atalhos: **Cartão CNPJ** (baixa o mais recente), **Pedir 2ª via de guia** e **Enviar documento**.
-- A situação das **Certidões**, do **Certificado digital**, das **Licenças e alvarás** e dos **Processos de legalização** da empresa.
+- **Atalhos** — Cartão CNPJ (baixa o mais recente), Pedir 2ª via de guia e Enviar documento.
+- **Situação da empresa** — Certidões, Certificado digital, Licenças e alvarás e Processos de legalização.
 
 ![Tela Início](c-inicio.png)
 
 ## As abas
 
-No alto ficam **Início**, **Documentos**, **Pedidos** e **Minha conta**. O botão **"Sair"** encerra o acesso.
+- **Início** — o resumo da empresa.
+- **Documentos** — as guias e os arquivos que o escritório enviou, e o envio de documentos ao escritório.
+- **Pedidos** — pedir serviços ao escritório e acompanhar a resposta.
+- **Minha conta** — os seus dados e a troca de senha.
+- **Sair** — encerra o acesso.
 
 ## Tenho mais de uma empresa
 

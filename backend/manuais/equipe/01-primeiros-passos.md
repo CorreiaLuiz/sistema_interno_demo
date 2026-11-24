@@ -27,7 +27,16 @@ Se o e-mail não chegar, peça ao administrador para redefinir a sua senha na te
 
 ## O menu da esquerda
 
-O menu mostra só as telas que o seu perfil pode usar: **Dashboard**, **Empresas**, **Legalização**, **Certidões**, **Licenças**, **E-mails enviados**, as telas dos setores (**Fiscal**, **Contabilidade**, **Folha de Pagamento**), **Ajuda** e, para o administrador, **Usuários** e **Auditoria**.
+O menu mostra só as telas que o seu perfil pode usar:
+
+- **Dashboard** — o resumo do escritório.
+- **Empresas** — o cadastro e a ficha de cada empresa.
+- **Legalização** — processos de abertura, alteração e baixa.
+- **Certidões** e **Licenças** — o controle das validades.
+- **E-mails enviados** — quem abriu o e-mail e quem baixou a guia.
+- **Fiscal**, **Contabilidade** e **Folha de Pagamento** — as tarefas e as conferências de cada setor.
+- **Ajuda** — este manual.
+- **Usuários** e **Auditoria** — só para o administrador.
 
 No rodapé do menu ficam **"Alterar minha senha"** e **"Sair do sistema"**.
 

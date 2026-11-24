@@ -22,9 +22,10 @@ Quem pode liberar: administrador, analista de legalização e supervisores dos s
 
 ## Quem tem acesso
 
-Na mesma janela, em **"Quem tem acesso"**, aparece cada login, se a senha já foi criada e o último acesso. Ali dá para:
+Na mesma janela, em **"Quem tem acesso"**, aparece cada login, se a senha já foi criada e o último acesso. Ali dá para usar:
 
-- **Reenviar convite** (se ainda não criou a senha) ou **Enviar link de nova senha** (se esqueceu a senha);
+- **Reenviar convite** — para quem ainda não criou a senha.
+- **Enviar link de nova senha** — para quem esqueceu a senha.
 - **Remover acesso** — a pessoa deixa de entrar e de receber os e-mails de guias daquela empresa.
 
 Em **"Últimos downloads do cliente"** você vê o que o cliente baixou.

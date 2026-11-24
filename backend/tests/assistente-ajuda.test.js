@@ -43,6 +43,37 @@ test('sub-itens ficam dentro do passo e a numeração continua', () => {
   assert.equal(html, '<ol><li>um</li><li>dois<ul><li>a</li><li>b</li></ul></li><li>três</li></ol>');
 });
 
+test('manual: tabela, lista de termos, quem pode, avisos e nome de botão sem aspas', () => {
+  const tabela = ajuda.renderizar('| Situação | O que é |\n|---|---|\n| **Baixada** | Zerou. |', 'equipe');
+  assert.ok(tabela.includes('<th>Situação</th>') && tabela.includes('<td><strong>Baixada</strong></td><td>Zerou.</td>'));
+  const termos = ajuda.renderizar('- **Válida** — dentro do prazo.\n- **Vencida:** passou da data.', 'equipe');
+  assert.ok(termos.includes('<dt>Válida</dt><dd>Dentro do prazo.</dd>') && termos.includes('<dt>Vencida</dt>'));
+  const comum = ajuda.renderizar('- **Forte** no meio de uma frase\n- item comum', 'equipe');
+  assert.ok(comum.includes('<ul>') && !comum.includes('aj-termos'), 'lista comum continua lista');
+  const comSub = ajuda.renderizar('- **A** — um\n- **B** — dois\n  - sub', 'equipe');
+  assert.ok(!comSub.includes('aj-termos'), 'lista com sub-itens continua lista');
+  assert.ok(ajuda.renderizar('Quem pode: administrador.', 'equipe').includes('class="aj-quem" data-rotulo="Quem pode">administrador.'));
+  assert.ok(ajuda.renderizar('> **Dica:** salve.', 'equipe').includes('data-rotulo="Dica">salve.'));
+  assert.ok(ajuda.renderizar('> **Importante:** confira.', 'equipe').includes('data-tipo="aviso"'));
+  assert.ok(ajuda.renderizar('Clique em **"Salvar"**.', 'equipe').includes('<strong>Salvar</strong>'));
+});
+
+test('manual: cada parte do capítulo ganha a etiqueta certa', () => {
+  const html = ajuda.emBlocos(ajuda.renderizar('Isto serve para algo.\n\n## Salvar\n\n1. um\n2. dois\n\n## Situações\n\n- **A** — um\n- **B** — dois\n\n## Bom saber\n\nTexto.', 'equipe'));
+  assert.ok(html.includes('aj-bloco-oque" data-rotulo="O que é"'));
+  assert.ok(html.includes('aj-bloco-como" data-rotulo="Como fazer"'));
+  assert.ok(html.includes('aj-bloco-termos" data-rotulo="O que é cada coisa"'));
+  assert.ok(/aj-bloco-saber">/.test(html), 'a etiqueta não repete o título');
+});
+
+test('manual: nenhum capítulo tem tabela ou marcação sem converter', () => {
+  for (const publico of ajuda.PUBLICOS) {
+    for (const s of ajuda.manualParaTela(publico)) {
+      assert.ok(!/\|---|\*\*/.test(s.html), `${publico}/${s.id}: sobrou marcação na tela`);
+    }
+  }
+});
+
 test('imagem que não existe não aparece quebrada', () => {
   const html = ajuda.renderizar('![Legenda](nao-existe-123.png)', 'equipe');
   assert.equal(html, '');

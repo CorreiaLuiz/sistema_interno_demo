@@ -19,7 +19,7 @@ Quem pode: administrador (ele pode liberar para outros perfis em **Usuários →
 - **Só consulta.** Não cadastra, não apaga, não manda e-mail ou guia e não mexe no Domínio. Para fazer algo, ele diz em qual tela do sistema.
 - **Com as suas permissões.** Ele vê só o que você vê. Cada consulta fica na **Auditoria**.
 - **Não gasta SERPRO.** A Caixa Postal mostra a última verificação feita no sistema, e nenhuma mensagem é aberta.
-- Os dados passam pelo Claude (Anthropic) para ele responder, como quando você cola uma informação numa conversa.
+- **Os dados passam pelo Claude.** A Anthropic recebe os dados para ele responder, como quando você cola uma informação numa conversa.
 
 ## Criar a chave e ligar
 
